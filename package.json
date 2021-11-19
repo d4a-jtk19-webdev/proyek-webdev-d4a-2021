@@ -2,7 +2,6 @@
   "name": "@proyek3",
   "workspaces": [
     "postgres-database",
-    "service-monitoring",
-    "frontend"
+    "backend"
   ]
 }

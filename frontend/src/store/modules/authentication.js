@@ -19,13 +19,7 @@ const authentication = {
 
   getters: {
     identity: state => {
-      console.log(state.identity)
-      return {
-        realm_access: {
-          roles: ["dosen"]
-        },
-        preferred_username: "196009281994031000"
-      }
+      return state.identity
     }
   },
 
