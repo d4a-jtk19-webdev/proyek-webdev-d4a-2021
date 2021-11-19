@@ -46,7 +46,7 @@ if (process.env.NODE_ENV === 'production') {
   }))
 } else {
   app.use(cors({
-    origin: 'http://akun.localhost:5000',
+    origin: 'http://frontend.localhost:5000',
     credentials: true
   }))
 
