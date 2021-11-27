@@ -107,7 +107,11 @@ export default {
           href: "/penilaian"
         },
         {
+<<<<<<< HEAD
+          text: "",
+=======
           text: "Dashboard Mahasiswa",
+>>>>>>> 53449c33a8bdaf1532d86dfa94d0d0d6c2f564e7
           disabled: false,
           href: "/penilaian/dashboard-nilai-mahasiswa"
         }
