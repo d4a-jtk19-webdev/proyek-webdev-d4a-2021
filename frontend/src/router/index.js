@@ -285,7 +285,7 @@ const routes = [
   },
   {
     path: "/monitoring",
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: false },
     component: () => import("../views/monitoring/monitoringmain"),
     children: [
       {
@@ -319,7 +319,7 @@ const routes = [
       // },
       {
         path: "/monitoring/dosen/monitoring-tugas/daftar-tugas/:id_matkul/:id_perkuliahan/tugas/:id_tugas",
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: false },
         name: "MonitoringDosenTugas",
         component: () => import(/* webpackChunkName: "monitoringDosenTugas" */ "../views/monitoring/pages/dosen/MonitoringDosenTabel")
       },
@@ -358,12 +358,19 @@ const routes = [
         meta: { requiresAuth: true },
         name: "MonitoringDaftarMatkul",
         component: () => import(/* webpackChunkName: "dashboard" */"../views/monitoring/pages/mahasiswa/monitoring/MonitoringMahasiswaDaftarMatKul")
-      }
+      },
       // {
       //   path: "/auth/reset-password",
       //   name: "ResetPassword",
       //   component: () => import(/* webpackChunkName: "add-new-user" */ "../views/auth/pages/resetPassword/ResetPassword")
       // }
+
+      {
+        path: "/monitoring/wali-dosen/list-mahasiswa",
+        meta: { requiresAuth: false },
+        name: "ListMahasiswa",
+        component: () => import("../views/monitoring/pages/wali-dosen/ListMahasiswa")
+      }
     ]
   },
   {

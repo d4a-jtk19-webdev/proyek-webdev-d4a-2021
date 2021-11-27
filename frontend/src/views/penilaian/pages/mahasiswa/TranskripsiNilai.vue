@@ -88,7 +88,7 @@ export default {
           href: ""
         },
         {
-          text: "Dashboard Mahasiswa",
+          text: "",
           disabled: false,
           href: ""
         },

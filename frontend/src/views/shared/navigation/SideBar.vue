@@ -89,6 +89,9 @@
         block id="logout-button"
         class="font-weight-bold text-uppercase text-button text-left"
         @click="logout()">
+        <v-icon medium>
+          mdi-logout
+        </v-icon>
         Log out
       </v-btn>
     </template>
