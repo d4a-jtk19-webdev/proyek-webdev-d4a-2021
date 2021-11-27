@@ -15,6 +15,29 @@
           :style="{color: currentTheme.colorPrimary}"
           class="text-lg-subtitle-1 font-weight">
         </v-data-table>
+        <template v-slot:[`item.basic_identity`]="{ item }">
+            <v-row
+            class="py-6"
+            style="margin:0; gap:1.375rem"
+            :justify="end">
+              <v-avatar
+              size="48">
+                <v-img
+                :src="item.foto"
+                position="start"
+                />
+              </v-avatar>
+              <v-col
+              style="padding:0">
+                <div>
+                  {{item.nama}}
+                </div>
+                <div class="text-caption">
+                  {{item.nim}}
+                </div>
+              </v-col>
+            </v-row>
+          </template>
         <template v-slot:no-data>
           <p
             :style="{color: currentTheme.colorPrimary}"
@@ -58,7 +81,15 @@ export default {
         { text: "EMAIL", value: "email", sortable: false },
         { text: "KONTAK(PHONE)", value: "nomor_ponsel", sortable: false }
       ],
-      listMahasiswa: []
+      listMahasiswa: [
+        {
+          nama: "Alvira Putrina Daradjat",
+          nim: "191524014",
+          foto: "https://akademik.polban.ac.id/fotomhsrekap/181524002.jpg",
+          email: "alvira.putrina.tif418@polban.ac.id",
+          nomor_ponsel: "08124125163"
+        }
+      ]
     }
   },
   computed: {
