@@ -1,7 +1,7 @@
 <template>
   <v-row :style="{color: currentTheme.onBackground}">
     <v-col cols="12">
-      <p class="text-h4 font-weight-bold"></p>
+      <p class="text-h4 font-weight-bold">Dashboard Mahasiswa</p>
     </v-col>
     <v-col cols="12">
       <breadcumbs :breadcrumb-items="breadcrumbItems"/>
@@ -107,7 +107,11 @@ export default {
           href: "/penilaian"
         },
         {
+<<<<<<< HEAD
           text: "",
+=======
+          text: "Dashboard Mahasiswa",
+>>>>>>> 53449c33a8bdaf1532d86dfa94d0d0d6c2f564e7
           disabled: false,
           href: "/penilaian/dashboard-nilai-mahasiswa"
         }
