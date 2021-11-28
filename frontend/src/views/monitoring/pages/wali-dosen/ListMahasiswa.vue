@@ -14,6 +14,29 @@
           :items-per-page="5"
           :style="{color: currentTheme.colorPrimary}"
           class="text-lg-subtitle-1 font-weight">
+          <template v-slot:item.basic_identity="{ item }">
+            <v-row
+              class="py-6"
+              style="margin:0; gap:1.375rem"
+              :justify="end">
+              <v-avatar
+                size="48">
+                <v-img
+                  :src="item.foto"
+                  position="start"
+                />
+              </v-avatar>
+              <v-col
+                style="padding:0">
+                <div>
+                  {{ item.nama }}
+                </div>
+                <div class="text-caption">
+                  {{ item.nim }}
+                </div>
+              </v-col>
+            </v-row>
+          </template>
         </v-data-table>
         <template v-slot:no-data>
           <p
