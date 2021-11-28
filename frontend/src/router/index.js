@@ -366,7 +366,7 @@ const routes = [
       // }
       {
         path: "/monitoring/wali-dosen/list-mahasiswa",
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: false },
         name: "ListMahasiswa",
         component: () => import("../views/monitoring/pages/wali-dosen/ListMahasiswa")
       }
