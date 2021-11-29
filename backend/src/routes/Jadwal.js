@@ -7,3 +7,4 @@ export default router
 
 
 router.get('/get-jadwal/:id_perkuliahan', JadwalController.getJadwalByWalDos)
+router.get('/kelas/:kode_kelas', JadwalController.getJadwalPerkuliahanByDay)
