@@ -18,7 +18,9 @@ const getMahasiswa = async () => {
       nim: "191524014",
       foto: "https://akademik.polban.ac.id/fotomhsrekap/181524002.jpg",
       email: "alvira.putrina.tif418@polban.ac.id",
-      nomor_ponsel: "08124125163"
+      nomor_ponsel: "08124125163",
+      pemahaman: "70%",
+      tugas: "100%"
     }
   ]
 }

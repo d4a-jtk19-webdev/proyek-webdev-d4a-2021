@@ -37,26 +37,17 @@
                     <div class="text-caption">
                       {{ item.nim }}
                     </div>
-                    <div>
+                    <!-- <div>
                       {{ item.graph[1] }}
-                    </div>
+                    </div> -->
                   </v-col>
                 </v-row>
               </template>
-              <template v-slot:[`item.graph_info`]="{ item }">
+              <template v-slot:[`item.graph_info`]>
                 <v-col
                 style="margin:0; padding:0"
                 >
-                  <graph/>
-                  <v-col
-                  v-for="(itemm, i) in graphData"
-                  :key="i"
-                  style="padding:0"
-                  >
-                    <div>
-                      {{item.radius}}
-                    </div>
-                  </v-col>
+                <graph/>
                 </v-col>
               </template>
             </v-data-table>
@@ -72,8 +63,8 @@
           <calender/>
         </v-row>
         <v-row>
-          <graph/>
           <matkul/>
+          <graph/>
         </v-row>
       </v-col>
     </v-row>
@@ -120,24 +111,11 @@ export default {
           value: "basic_identity",
           sortable: true
         },
-        {
-          text: "GRAPH",
-          align: "start",
-          value: "graph_info",
-          sortable: false
-        },
-        { text: "% TUGAS", align: "center", value: "tugas", sortable: false },
-        { text: "% PAHAM", align: "center", value: "pemahaman", sortable: false }
+        { text: "GRAPH", value: "graph_info", sortable: false },
+        { text: "% TUGAS", value: "tugas", sortable: false },
+        { text: "% PAHAM", value: "pemahaman", sortable: false }
       ],
       listMahasiswa: [
-        {
-          nama: "Alvira Putrina Daradjat",
-          nim: "191524014",
-          foto: "https://akademik.polban.ac.id/fotomhsrekap/181524002.jpg",
-          pemahaman: "70%",
-          tugas: "100%",
-          graph: [0, 2, 5, 9, 5, 10, 3, 5, 0]
-        }
       ],
       graphData: [
         {
