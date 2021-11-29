@@ -58,7 +58,12 @@ export default {
         { text: "Dashboard Mahasiswa", icon: "mdi-school-outline", to: "/monitoring/mahasiswa/dashboard" },
         { text: "Monitoring Tugas Mahasiswa", icon: "mdi-monitor-multiple", to: "/monitoring/mahasiswa/matakuliah" }
       ],
-      isUserDosen: false
+      sideBarItemsWlDsn: [
+        { text: "Dashboard", icon: "mdi-view-dashboard", to: "/monitoring/wali-dosen/dashboard" },
+        { text: "List Mahasiswa", icon: "mdi-account-group", to: "/monitoring/wali-dosen/list-mahasiswa" }
+      ],
+      isUserDosen: false,
+      isUserMhs: false
     }
   },
   computed: {
