@@ -37,61 +37,31 @@
                     <div class="text-caption">
                       {{ item.nim }}
                     </div>
+                    <div class="text-caption">
+                      {{ item.graph[1] }}
+                    </div>
+                  </v-col>
+                </v-row>
+              </template>
+              <template v-slot:[`item.graph_info`]="{ item }">
+                <v-row
+                class="py-6"
+                style="margin:0; gap:1.375rem"
+                :justify="end">
+                  <graph/>
+                  <v-col
+                  v-for="(itemm, i) in graphData"
+                  :key="i"
+                  style="padding:0"
+                  >
+                    <div class="text-caption">
+                      {{itemm.radius}}
+                      {{item.graph}}
+                    </div>
                   </v-col>
                 </v-row>
               </template>
             </v-data-table>
-            <template v-slot:[`item.basic_identity`]="{ item }">
-              <v-row
-              class="py-6"
-              style="margin:0; gap:1.375rem"
-              :justify="end">
-                <v-avatar
-                size="48">
-                  <v-img
-                  :src="item.foto"
-                  position="start"
-                  />
-                </v-avatar>
-                <v-col
-                style="padding:0">
-                  <div>
-                    {{item.nama}}
-                  </div>
-                  <div class="text-caption">
-                    {{item.nim}}
-                  </div>
-                </v-col>
-                <v-col>
-                  <div>
-                    <graph/>
-                  </div>
-                </v-col>
-              </v-row>
-            </template>
-            <!-- <template v-slot:[`item.graph_info`]="{ item }">
-              <v-row
-              class="py-6"
-              style="margin:0; gap:1.375rem"
-              :justify="end">
-                <v-avatar
-                size="48">
-                  <v-img
-                  :src="item.foto"
-                  position="start"
-                  />
-                </v-avatar>
-                <v-col
-                style="padding:0">
-                  <div>
-                    {{item.nama}}
-                  </div>
-                  <div class="text-caption">
-                    {{item.nim}}
-                  </div>
-                </v-col>
-              </v-row>
-            </template> -->
             <template v-slot:no-data>
               <p
                 :style="{color: currentTheme.colorPrimary}"
@@ -155,6 +125,7 @@ export default {
         {
           text: "GRAPH",
           align: "start",
+          value: "graph_info",
           sortable: false
         },
         { text: "EMAIL", value: "email", sortable: false },
@@ -166,7 +137,8 @@ export default {
           nim: "191524014",
           foto: "https://akademik.polban.ac.id/fotomhsrekap/181524002.jpg",
           email: "alvira.putrina.tif418@polban.ac.id",
-          nomor_ponsel: "08124125163"
+          nomor_ponsel: "08124125163",
+          graph: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0]
         }
       ],
       graphData: [
