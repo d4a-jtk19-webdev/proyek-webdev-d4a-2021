@@ -98,10 +98,6 @@ export default {
     identity: function () {
       return this.$store.getters.identity
     }
-  },
-  async mounted () {
-    var mahasiswa = await ListMahasiswa.getMahasiswa()
-    this.listMahasiswa = mahasiswa
   }
 }
 </script>
