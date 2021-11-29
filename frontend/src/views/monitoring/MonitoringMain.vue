@@ -17,12 +17,10 @@
 </template>
 
 <script>
-
 import * as Keycloak from "keycloak-js"
 import SideBar from "@/views/shared/navigation/SideBar"
 import NavBar from "@/views/shared/navigation/NavBar"
 import { mapGetters, mapActions } from "vuex"
-
 /*
   Token Access interval adalah 5 jam maka
   dilakukan perhitungan sebagai berikut :
