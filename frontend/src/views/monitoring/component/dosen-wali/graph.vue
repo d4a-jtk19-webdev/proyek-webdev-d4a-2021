@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container fluid style="padding:0">
     <v-sparkline
       :fill="fill"
       :gradient="selectedGradient"
@@ -27,10 +27,10 @@ export default {
     fill: false,
     selectedGradient: gradients[0],
     gradients,
-    padding: 8,
+    padding: 0,
     radius: 10,
     value: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0],
-    width: 2
+    width: 10
   })
 }
 </script>

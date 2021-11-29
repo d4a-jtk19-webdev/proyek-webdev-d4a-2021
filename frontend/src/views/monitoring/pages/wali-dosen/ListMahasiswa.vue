@@ -104,15 +104,7 @@ export default {
         { text: "EMAIL", value: "email", sortable: false },
         { text: "KONTAK(PHONE)", value: "nomor_ponsel", sortable: false }
       ],
-      listMahasiswa: [
-        {
-          nama: "Alvira Putrina Daradjat",
-          nim: "191524014",
-          foto: "https://akademik.polban.ac.id/fotomhsrekap/181524002.jpg",
-          email: "alvira.putrina.tif418@polban.ac.id",
-          nomor_ponsel: "08124125163"
-        }
-      ]
+      listMahasiswa: []
     }
   },
   computed: {

@@ -10,7 +10,7 @@
       <v-col>
         <v-row>
           <!-- Table Section -->
-          <v-col cols="12">
+          <v-col cols="8">
             <v-data-table
               :headers="headers"
               :items="listMahasiswa"
@@ -37,29 +37,27 @@
                     <div class="text-caption">
                       {{ item.nim }}
                     </div>
-                    <div class="text-caption">
+                    <div>
                       {{ item.graph[1] }}
                     </div>
                   </v-col>
                 </v-row>
               </template>
               <template v-slot:[`item.graph_info`]="{ item }">
-                <v-row
-                class="py-6"
-                style="margin:0; gap:1.375rem"
-                :justify="end">
+                <v-col
+                style="margin:0; padding:0"
+                >
                   <graph/>
                   <v-col
                   v-for="(itemm, i) in graphData"
                   :key="i"
                   style="padding:0"
                   >
-                    <div class="text-caption">
-                      {{itemm.radius}}
-                      {{item.graph}}
+                    <div>
+                      {{item.radius}}
                     </div>
                   </v-col>
-                </v-row>
+                </v-col>
               </template>
             </v-data-table>
             <template v-slot:no-data>
@@ -128,17 +126,17 @@ export default {
           value: "graph_info",
           sortable: false
         },
-        { text: "EMAIL", value: "email", sortable: false },
-        { text: "KONTAK(PHONE)", value: "nomor_ponsel", sortable: false }
+        { text: "% TUGAS", align: "center", value: "tugas", sortable: false },
+        { text: "% PAHAM", align: "center", value: "pemahaman", sortable: false }
       ],
       listMahasiswa: [
         {
           nama: "Alvira Putrina Daradjat",
           nim: "191524014",
           foto: "https://akademik.polban.ac.id/fotomhsrekap/181524002.jpg",
-          email: "alvira.putrina.tif418@polban.ac.id",
-          nomor_ponsel: "08124125163",
-          graph: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0]
+          pemahaman: "70%",
+          tugas: "100%",
+          graph: [0, 2, 5, 9, 5, 10, 3, 5, 0]
         }
       ],
       graphData: [
@@ -146,10 +144,8 @@ export default {
           fill: true,
           selectedGradient: gradients[4],
           gradients,
-          padding: 8,
-          radius: 10,
-          value: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0],
-          width: 2
+          padding: 0,
+          width: 1
         }
       ],
       matkulItems: [
