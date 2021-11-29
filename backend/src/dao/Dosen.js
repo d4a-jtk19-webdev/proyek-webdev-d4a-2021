@@ -83,3 +83,17 @@ export const destroyDosenByNip = async (nip) => {
     return Promise.reject(new Error('Delete dosen by NIP gagal'))
   }
 }
+
+export const getJadwalByWalDos = async (id_perkuliahan) => {
+  try{
+    const dosen = await Dosen.findAll({
+      where:{
+        // hari: hari,
+        id_perkuliahan: id_perkuliahan
+      }
+    })
+    return dosen
+  }catch(error){
+    return Promise.reject(new Error('Gagal mendapatkan jadwal'))
+  }
+}
