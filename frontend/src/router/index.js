@@ -369,6 +369,12 @@ const routes = [
         meta: { requiresAuth: false },
         name: "ListMahasiswa",
         component: () => import("../views/monitoring/pages/wali-dosen/ListMahasiswa")
+      },
+      {
+        path: "/monitoring/wali-dosen/dashboard",
+        meta: { requiresAuth: false },
+        name: "Dashboard",
+        component: () => import("../views/monitoring/pages/wali-dosen/Dashboard")
       }
     ]
   },

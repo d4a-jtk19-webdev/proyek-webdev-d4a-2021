@@ -1,50 +1,19 @@
 <template>
     <v-row :style="{color: currentTheme.onBackground}">
       <v-col cols="12">
-        <p class="text-h4 font-weight-bold">List Mahasiswa</p>
+        <p class="text-h4 font-weight-bold">Dashboard</p>
         <p class="text-subtitle-1 font-weight-bold">Tahun ajaran 2019</p>
       </v-col>
       <v-col cols="12">
         <breadcumbs :breadcrumb-items="breadcrumbItems"/>
       </v-col>
-      <v-col cols="12">
-        <v-data-table
-          :headers="headers"
-          :items="listMahasiswa"
-          :items-per-page="5"
-          :style="{color: currentTheme.colorPrimary}"
-          class="text-lg-subtitle-1 font-weight">
-        </v-data-table>
-        <template v-slot:[`item.basic_identity`]="{ item }">
-            <v-row
-            class="py-6"
-            style="margin:0; gap:1.375rem"
-            :justify="end">
-              <v-avatar
-              size="48">
-                <v-img
-                :src="item.foto"
-                position="start"
-                />
-              </v-avatar>
-              <v-col
-              style="padding:0">
-                <div>
-                  {{item.nama}}
-                </div>
-                <div class="text-caption">
-                  {{item.nim}}
-                </div>
-              </v-col>
-            </v-row>
-          </template>
-        <template v-slot:no-data>
-          <p
-            :style="{color: currentTheme.colorPrimary}"
-            class="text-lg-subtitle-1 font-weight-bold"
-          >No Data Available
-          </p>
-        </template>
+      <v-col>
+        <v-row>
+          <calender/>
+        </v-row>
+        <v-row>
+          <matkul/>
+        </v-row>
       </v-col>
     </v-row>
 </template>
@@ -53,10 +22,21 @@
 import { mapGetters } from "vuex"
 import Breadcumbs from "@/views/shared/navigation/Breadcumbs"
 import ListMahasiswa from "../../../../datasource/network/monitoring/listMahasiswa"
+import Calender from "@/views/monitoring/component/dosen-wali/calender"
+import Matkul from "@/views/monitoring/component/dosen-wali/matkul"
+
+const gradients = [
+  ["#222"],
+  ["#42b3f4"],
+  ["red", "orange", "yellow"],
+  ["purple", "violet"],
+  ["#00c6ff", "#F0F", "#FF0"],
+  ["#f72047", "#ffd200", "#1feaea"]
+]
 
 export default {
-  name: "ListMahasiswa",
-  components: { Breadcumbs },
+  name: "Dashboard",
+  components: { Breadcumbs, Calender, Matkul },
   data () {
     return {
       breadcrumbItems: [
@@ -66,7 +46,7 @@ export default {
           href: ""
         },
         {
-          text: "List Mahasiswa",
+          text: "Dashboard",
           disabled: true,
           href: ""
         }
@@ -89,6 +69,21 @@ export default {
           email: "alvira.putrina.tif418@polban.ac.id",
           nomor_ponsel: "08124125163"
         }
+      ],
+      graphData: [
+        {
+          fill: true,
+          selectedGradient: gradients[4],
+          gradients,
+          padding: 8,
+          radius: 10,
+          value: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0],
+          width: 2
+        }
+      ],
+      matkulItems: [
+        { title: "Dasar Dasar Pemrograman (Praktek)", icon: "mdi-view-dashboard" },
+        { title: "Matematika Diskit (Teori)", icon: "mdi-forum" }
       ]
     }
   },

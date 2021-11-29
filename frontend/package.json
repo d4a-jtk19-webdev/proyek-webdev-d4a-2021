@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve:development": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
-    "build": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build",
-    "lint": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service lint"
+    "serve:development": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "apexcharts": "^3.26.0",
@@ -22,6 +22,7 @@
     "v-calendar": "^2.3.0",
     "vue": "~2.6.12",
     "vue-apexcharts": "^1.6.1",
+    "vue-functional-calendar": "^2.9.8",
     "vue-router": "~3.5.1",
     "vue2-editor": "^2.10.2",
     "vuetify": "~2.4.7",
