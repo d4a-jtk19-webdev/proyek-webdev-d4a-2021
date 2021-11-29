@@ -9,9 +9,102 @@
       </v-col>
       <v-col>
         <v-row>
+          <!-- Table Section -->
+          <v-col cols="12">
+            <v-data-table
+              :headers="headers"
+              :items="listMahasiswa"
+              :items-per-page="5"
+              :style="{color: currentTheme.colorPrimary}"
+              class="text-lg-subtitle-1 font-weight">
+              <template v-slot:[`item.basic_identity`]="{ item }">
+                <v-row
+                  class="py-6"
+                  style="margin:0; gap:1.375rem"
+                  :justify="end">
+                  <v-avatar
+                    size="48">
+                    <v-img
+                      :src="item.foto"
+                      position="start"
+                    />
+                  </v-avatar>
+                  <v-col
+                    style="padding:0">
+                    <div>
+                      {{ item.nama }}
+                    </div>
+                    <div class="text-caption">
+                      {{ item.nim }}
+                    </div>
+                  </v-col>
+                </v-row>
+              </template>
+            </v-data-table>
+            <template v-slot:[`item.basic_identity`]="{ item }">
+              <v-row
+              class="py-6"
+              style="margin:0; gap:1.375rem"
+              :justify="end">
+                <v-avatar
+                size="48">
+                  <v-img
+                  :src="item.foto"
+                  position="start"
+                  />
+                </v-avatar>
+                <v-col
+                style="padding:0">
+                  <div>
+                    {{item.nama}}
+                  </div>
+                  <div class="text-caption">
+                    {{item.nim}}
+                  </div>
+                </v-col>
+                <v-col>
+                  <div>
+                    <graph/>
+                  </div>
+                </v-col>
+              </v-row>
+            </template>
+            <!-- <template v-slot:[`item.graph_info`]="{ item }">
+              <v-row
+              class="py-6"
+              style="margin:0; gap:1.375rem"
+              :justify="end">
+                <v-avatar
+                size="48">
+                  <v-img
+                  :src="item.foto"
+                  position="start"
+                  />
+                </v-avatar>
+                <v-col
+                style="padding:0">
+                  <div>
+                    {{item.nama}}
+                  </div>
+                  <div class="text-caption">
+                    {{item.nim}}
+                  </div>
+                </v-col>
+              </v-row>
+            </template> -->
+            <template v-slot:no-data>
+              <p
+                :style="{color: currentTheme.colorPrimary}"
+                class="text-lg-subtitle-1 font-weight-bold"
+              >No Data Available
+              </p>
+            </template>
+          </v-col>
+          <!-- CALENDER SECTION -->
           <calender/>
         </v-row>
         <v-row>
+          <graph/>
           <matkul/>
         </v-row>
       </v-col>
@@ -21,9 +114,10 @@
 <script>
 import { mapGetters } from "vuex"
 import Breadcumbs from "@/views/shared/navigation/Breadcumbs"
-// import ListMahasiswa from "../../../../datasource/network/monitoring/listMahasiswa"
+import ListMahasiswa from "../../../../datasource/network/monitoring/listMahasiswa"
 import Calender from "@/views/monitoring/component/dosen-wali/calender"
 import Matkul from "@/views/monitoring/component/dosen-wali/matkul"
+import Graph from "@/views/monitoring/component/dosen-wali/graph"
 
 const gradients = [
   ["#222"],
@@ -36,7 +130,7 @@ const gradients = [
 
 export default {
   name: "Dashboard",
-  components: { Breadcumbs, Calender, Matkul },
+  components: { Breadcumbs, Calender, Matkul, Graph },
   data () {
     return {
       breadcrumbItems: [
@@ -57,6 +151,11 @@ export default {
           align: "start",
           value: "basic_identity",
           sortable: true
+        },
+        {
+          text: "GRAPH",
+          align: "start",
+          sortable: false
         },
         { text: "EMAIL", value: "email", sortable: false },
         { text: "KONTAK(PHONE)", value: "nomor_ponsel", sortable: false }
@@ -98,6 +197,10 @@ export default {
     identity: function () {
       return this.$store.getters.identity
     }
+  },
+  async mounted () {
+    var mahasiswa = await ListMahasiswa.getMahasiswa()
+    this.listMahasiswa = mahasiswa
   }
 }
 </script>

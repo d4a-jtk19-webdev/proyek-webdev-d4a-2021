@@ -14,7 +14,7 @@
           :items-per-page="5"
           :style="{color: currentTheme.colorPrimary}"
           class="text-lg-subtitle-1 font-weight">
-          <template v-slot:item.basic_identity="{ item }">
+          <template v-slot:[`item.basic_identity`]="{ item }">
             <v-row
               class="py-6"
               style="margin:0; gap:1.375rem"
