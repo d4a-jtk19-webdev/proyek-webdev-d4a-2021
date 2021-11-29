@@ -1,6 +1,6 @@
 <template>
   <v-app :style="{background : currentTheme.background}">
-    <side-bar v-if="!isMobile" :items="isUserDosen ? sideBarItemsDsn : sideBarItemsMhs"/>
+    <side-bar v-if="!isMobile" :items="isUserDosen ? sideBarItemsDsn : isUserMhs ? sideBarItemsMhs : sideBarItemsWlDsn"/>
     <nav-bar/>
     <v-main>
       <v-container :class="isMobile? 'pa-5' : 'pa-12'">
@@ -60,7 +60,11 @@ export default {
         { text: "Dashboard Mahasiswa", icon: "mdi-school-outline", to: "/monitoring/mahasiswa/dashboard" },
         { text: "Monitoring Tugas Mahasiswa", icon: "mdi-monitor-multiple", to: "/monitoring/mahasiswa/matakuliah" }
       ],
-      isUserDosen: false
+      sideBarItemsWlDsn: [
+        { text: "List Mahasiswa", icon: "mdi-account-group", to: "/monitoring/wali-dosen/list-mahasiswa" }
+      ],
+      isUserDosen: false,
+      isUserMhs: false
     }
   },
   computed: {
@@ -141,6 +145,8 @@ export default {
       for (var i in roles) {
         if (roles[i] === "dosen") {
           this.isUserDosen = true
+        } else if (roles[i] === "mahasiswa") {
+          this.isUserMhs = true
         }
       }
       console.log("roles " + this.isUserDosen)

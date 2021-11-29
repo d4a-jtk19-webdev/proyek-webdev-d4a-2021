@@ -285,7 +285,7 @@ const routes = [
   },
   {
     path: "/monitoring",
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: false },
     component: () => import("../views/monitoring/monitoringmain"),
     children: [
       {

@@ -14,52 +14,9 @@ const getMahasiswa = async () => {
   // }
   return [
     {
-      basic_identity: "1Alvira Putrina Daradjat",
-      email: "alvira.putrina.tif418@polban.ac.id",
-      nomor_ponsel: "08124125163"
-    },
-    {
-      basic_identity: "3Alvira Putrina Daradjat",
-      email: "alvira.putrina.tif418@polban.ac.id",
-      nomor_ponsel: "08124125163"
-    },
-    {
-      basic_identity: "4Alvira Putrina Daradjat",
-      email: "alvira.putrina.tif418@polban.ac.id",
-      nomor_ponsel: "08124125163"
-    },
-    {
-      basic_identity: "2Alvira Putrina Daradjat",
-      email: "alvira.putrina.tif418@polban.ac.id",
-      nomor_ponsel: "08124125163"
-    },
-    {
-      basic_identity: "5Alvira Putrina Daradjat",
-      email: "alvira.putrina.tif418@polban.ac.id",
-      nomor_ponsel: "08124125163"
-    },
-    {
-      basic_identity: "Alvira Putrina Daradjat",
-      email: "alvira.putrina.tif418@polban.ac.id",
-      nomor_ponsel: "08124125163"
-    },
-    {
-      basic_identity: "Alvira Putrina Daradjat",
-      email: "alvira.putrina.tif418@polban.ac.id",
-      nomor_ponsel: "08124125163"
-    },
-    {
-      basic_identity: "Alvira Putrina Daradjat",
-      email: "alvira.putrina.tif418@polban.ac.id",
-      nomor_ponsel: "08124125163"
-    },
-    {
-      basic_identity: "Alvira Putrina Daradjat",
-      email: "alvira.putrina.tif418@polban.ac.id",
-      nomor_ponsel: "08124125163"
-    },
-    {
-      basic_identity: "Alvira Putrina Daradjat",
+      nama: "Alvira Putrina Daradjat",
+      nim: "191524014",
+      foto: "https://akademik.polban.ac.id/fotomhsrekap/181524002.jpg",
       email: "alvira.putrina.tif418@polban.ac.id",
       nomor_ponsel: "08124125163"
     }
