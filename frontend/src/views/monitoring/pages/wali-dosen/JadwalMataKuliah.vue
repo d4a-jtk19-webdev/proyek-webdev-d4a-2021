@@ -4,7 +4,7 @@
         <p class="text-h4 font-weight-bold">List Mahasiswa</p>
         <p class="text-subtitle-1 font-weight-bold">Tahun ajaran 2019</p>
       </v-col>
-      <v-col cols="12">
+      <v-col cols="3">
         <breadcumbs :breadcrumb-items="breadcrumbItems"/>
       </v-col>
       <v-col cols="12">
@@ -28,32 +28,40 @@
             :key="item"
           >
             <v-sheet>
-            <v-card class="pa-4 d-flex flex-no-wrap justify-space-between pa-3">
+            <v-card class="pa-5 d-flex flex-no-wrap justify-space-between" style="gap:1rem">
                 <v-sheet rounded="lg" class="green lighten-4 pa-3">
-                    <div class="rounded-lg pa-3 text-h6 white">1 - 2</div>
+                    <div
+                    class="rounded-lg pt-3 pb-6 text-h4 white"
+                    :class="{'px-3' : isTablet, 'px-12' : !isTablet}"
+                    >
+                      1 - 2
+                    </div>
                 </v-sheet>
-                <v-sheet class="col-3">
+                <v-sheet style="width:50%">
                   <v-sheet>
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on, attrs }">
-                        <div v-bind="attrs" v-on="on" class="text-h5 text-truncate">Manajemen Proyek Rekayasa Perangkat Lunak</div>
+                        <div v-bind="attrs" v-on="on" class="text-h4 text-truncate" style="cursor:default">Manajemen Proyek Rekayasa Perangkat Lunak</div>
                       </template>
                       <span>Manajemen Proyek Rekayasa Perangkat Lunak</span>
                     </v-tooltip>
-                    <v-sheet class="d-flex flex-no-wrap justify-space-between">
-                      <v-card-subtitle>16TIN5063</v-card-subtitle>
-                      <v-card-subtitle>3 SKS</v-card-subtitle>
+                    <v-sheet class="d-flex flex-no-wrap align-center" style="gap:1rem">
+                      <v-card-subtitle class="text-h6" style="padding:0">16TIN5063</v-card-subtitle>
+                      <v-card-subtitle class="py-3 text-h5 font-weight-bold" style="color:#232323; padding:0">3 SKS</v-card-subtitle>
                     </v-sheet>
                   </v-sheet>
                   <v-sheet>
                     <div class="text-h6">Dosen Pengampu:</div>
-                    <v-sheet class="d-flex flex-wrap justify-start align-center">
-                      <div
-                        class="rounded-pill green grey lighten-2 pa-1 text-truncate ma-2"
-                      >Didik Suwito</div>
-                      <div
-                        class="rounded-pill green grey lighten-2 pa-1 text-truncate"
-                      >Transmissia Semiawan</div>
+                    <v-sheet class="d-flex flex-wrap justify-start align-center mt-4" style="gap:1rem">
+                      <div class="rounded-pill green grey lighten-2 px-4 py-2 text-truncate"
+                        >Didik Suwito
+                      </div>
+                      <div class="rounded-pill green grey lighten-2 px-4 py-2 text-truncate"
+                        >Didik Suwito
+                      </div>
+                      <div class="rounded-pill green grey lighten-2 px-4 py-2 text-truncate"
+                        >Didik Suwito
+                      </div>
                     </v-sheet>
                   </v-sheet>
                 </v-sheet>
@@ -104,7 +112,10 @@ export default {
       isDark: "theme/getIsDark"
     }),
     isMobile () {
-      return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs
+      return this.$vuetify.breakpoint.xs
+    },
+    isTablet () {
+      return this.$vuetify.breakpoint.sm
     },
     identity: function () {
       return this.$store.getters.identity
