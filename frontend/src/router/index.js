@@ -358,7 +358,7 @@ const routes = [
         meta: { requiresAuth: true },
         name: "MonitoringDaftarMatkul",
         component: () => import(/* webpackChunkName: "dashboard" */"../views/monitoring/pages/mahasiswa/monitoring/MonitoringMahasiswaDaftarMatKul")
-      }
+      },
       // {
       //   path: "/auth/reset-password",
       //   name: "ResetPassword",

@@ -13,7 +13,8 @@
           :items="listMahasiswa"
           :items-per-page="5"
           :style="{color: currentTheme.colorPrimary}"
-          class="text-lg-subtitle-1 font-weight">
+          class="text-lg-subtitle-1 font-weight"
+          :custom-sort="sortAscending">
           <template v-slot:[`item.basic_identity`]="{ item }">
             <v-row
               class="py-6"
@@ -99,7 +100,7 @@ export default {
           text: "MAHASISWA",
           align: "start",
           value: "basic_identity",
-          sortable: true
+          sortable: false
         },
         { text: "EMAIL", value: "email", sortable: false },
         { text: "KONTAK(PHONE)", value: "nomor_ponsel", sortable: false }
@@ -122,6 +123,19 @@ export default {
   async mounted () {
     var mahasiswa = await ListMahasiswa.getMahasiswa()
     this.listMahasiswa = mahasiswa
+  },
+  methods: {
+    sortAscending (items) {
+      console.log(items)
+      items.sort((a, b) => {
+        if (a.nama >= b.nama) {
+          return 1
+        } else {
+          return -1
+        }
+      })
+      return items
+    }
   }
 }
 </script>
