@@ -7,6 +7,30 @@
       <v-col cols="12">
         <breadcumbs :breadcrumb-items="breadcrumbItems"/>
       </v-col>
+      <template>
+        <v-card
+          color="#272343"
+          class="mb-5"
+          width="100%"
+        >
+          <v-row
+            class="justify-space-between">
+            <v-col
+              class="pa-10 white--text"
+              cols="8"
+            >
+              <div class="mb-5">
+                <p class="text-h4 font-weight-bold">Hallo, Sri Ratna Wulan</p>
+                <p class="text-subtitle-1 font-weight-bold">Data di bawah ini merupakan data mahasiswa</p>
+                <p class="text-subtitle-1 font-weight-bold">Kelas D4-3A Tahun Ajaran 2019</p>
+              </div>
+            </v-col>
+            <div class="mr-10" style="height:50">
+              <v-img :src="require('../../../../assets/vectorArt.png')" height="100%" width="auto"/>
+            </div>
+          </v-row>
+        </v-card>
+      </template>
       <v-col>
         <v-row>
           <!-- Table Section -->
