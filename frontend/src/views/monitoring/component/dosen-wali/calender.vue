@@ -1,10 +1,14 @@
 <template>
-  <div class="container mt-5 mb-5">
-    <div class="row row-eq-height">
-      <div class="col-md-4">
+  <v-card
+    outlined
+    class="px-1 py-2 pb-0 mb-5"
+    max-height="350"
+  >
+    <v-cols
+      cols="12"
+    >
+      <div class="mb-5">
         <functional-calendar
-          :change-month-function="true"
-          :change-year-function="true"
           :is-date-range="true"
           :is-dark="true"
           class="calendar"
@@ -14,8 +18,8 @@
           code="<functional-calendar :is-dark='true'></functional-calendar>"
         ></highlight-code>
       </div>
-    </div>
-  </div>
+    </v-cols>
+  </v-card>
 </template>
 
 <script>

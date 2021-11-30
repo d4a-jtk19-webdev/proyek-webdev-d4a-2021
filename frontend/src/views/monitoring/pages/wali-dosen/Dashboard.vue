@@ -37,9 +37,6 @@
                     <div class="text-caption">
                       {{ item.nim }}
                     </div>
-                    <!-- <div>
-                      {{ item.graph[1] }}
-                    </div> -->
                   </v-col>
                 </v-row>
               </template>
@@ -59,12 +56,11 @@
               </p>
             </template>
           </v-col>
-          <!-- CALENDER SECTION -->
-          <calender/>
-        </v-row>
-        <v-row>
-          <matkul/>
-          <graph/>
+          <v-col cols="4">
+            <!-- CALENDER & MATKUL SECTION -->
+            <calender/>
+            <matkul/>
+          </v-col>
         </v-row>
       </v-col>
     </v-row>
@@ -112,8 +108,8 @@ export default {
           sortable: true
         },
         { text: "GRAPH", value: "graph_info", sortable: false },
-        { text: "% TUGAS", value: "tugas", sortable: false },
-        { text: "% PAHAM", value: "pemahaman", sortable: false }
+        { text: "% TUGAS", align: "center", value: "tugas", sortable: false },
+        { text: "% PAHAM", align: "center", value: "pemahaman", sortable: false }
       ],
       listMahasiswa: [
       ],
