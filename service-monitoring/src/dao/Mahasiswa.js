@@ -1,5 +1,11 @@
 import Mahasiswa from '../models/Mahasiswa'
 import sequelize from '../db.js'
+import Subtugas from '../models/Subtugas'
+import Studi from '../models/Studi'
+
+import Sequelize from 'sequelize'
+
+const Op = Sequelize.Op
 
 export const findOneMahasiswaByNIM = async (nim) => {
   try {
@@ -125,6 +131,42 @@ export const findMahasiswaByClass = async (kode_kelas) => {
       order: [['nama_mahasiswa', 'ASC']]
     })
     return mahasiswa
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const getRekapSubtugasById = async (nim) => {
+  try {
+    const tugastelat = await Mahasiswa.findAndCountAll({
+      include: [{
+        model: Studi,
+        include: [{
+          model: Subtugas,
+          where: { status_subtugas: 'f', tenggat: { [Op.lt]: new Date() } }
+        }]
+      }],
+      where: {
+        nim: nim.toString()
+      }
+    })
+
+    const alltugas = await Mahasiswa.findAndCountAll({
+      include: [{
+        model: Studi,
+        include: [{
+          model: Subtugas,
+          where: { tenggat: { [Op.lt]: new Date() } }
+        }]
+      }],
+      where: {
+        nim: nim.toString()
+      }
+    })
+
+    const rekap = { 'tugas_telat': tugastelat.count, 'semua_tugas': alltugas.count, 'persentase': ((alltugas.count - tugastelat.count) / alltugas.count) * 100 }
+
+    return rekap
   } catch (error) {
     console.error(error)
   }

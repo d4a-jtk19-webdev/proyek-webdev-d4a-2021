@@ -167,3 +167,18 @@ export const searchMahasiswaByClass = async (req, res, next) => {
     next(error)
   }
 }
+
+export const getRekapSubtugasMahasiswaById = async (req, res, next) => {
+  try {
+    const { NIM } = req.params
+    const rekapTugas = await MahasiswaDAO.getRekapSubtugasById(NIM)
+    res.status(200).json({
+      message: 'get rekap subtugas Mahasiswa by Id success',
+      data: {
+        rekapTugas
+      }
+    })
+  } catch (error) {
+    next(error)
+  }
+}
