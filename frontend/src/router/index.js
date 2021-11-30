@@ -359,6 +359,12 @@ const routes = [
         name: "MonitoringDaftarMatkul",
         component: () => import(/* webpackChunkName: "dashboard" */"../views/monitoring/pages/mahasiswa/monitoring/MonitoringMahasiswaDaftarMatKul")
       },
+      {
+        path: "/monitoring/wali-dosen/jadwal-mata-kuliah",
+        meta: { requiresAuth: true },
+        name: "JadwalMataKuliah",
+        component: () => import("../views/monitoring/pages/wali-dosen/JadwalMataKuliah")
+      },
       // {
       //   path: "/auth/reset-password",
       //   name: "ResetPassword",
