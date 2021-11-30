@@ -14,7 +14,28 @@ const getMahasiswa = async () => {
   // }
   return [
     {
-      nama: "Alvira Putrina Daradjat",
+      nama: "1Alvira Putrina Daradjat",
+      nim: "191524014",
+      foto: "https://akademik.polban.ac.id/fotomhsrekap/181524002.jpg",
+      email: "alvira.putrina.tif418@polban.ac.id",
+      nomor_ponsel: "08124125163"
+    },
+    {
+      nama: "3Alvira Putrina Daradjat",
+      nim: "191524014",
+      foto: "https://akademik.polban.ac.id/fotomhsrekap/181524002.jpg",
+      email: "alvira.putrina.tif418@polban.ac.id",
+      nomor_ponsel: "08124125163"
+    },
+    {
+      nama: "4Alvira Putrina Daradjat",
+      nim: "191524014",
+      foto: "https://akademik.polban.ac.id/fotomhsrekap/181524002.jpg",
+      email: "alvira.putrina.tif418@polban.ac.id",
+      nomor_ponsel: "08124125163"
+    },
+    {
+      nama: "2Alvira Putrina Daradjat",
       nim: "191524014",
       foto: "https://akademik.polban.ac.id/fotomhsrekap/181524002.jpg",
       email: "alvira.putrina.tif418@polban.ac.id",
