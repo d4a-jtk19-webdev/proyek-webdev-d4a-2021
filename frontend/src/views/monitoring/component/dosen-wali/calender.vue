@@ -1,7 +1,8 @@
 <template>
   <v-card
     class="mb-5"
-    max-height="350"
+    max-height="300"
+    max-width="364"
   >
     <v-cols
       cols="12"
