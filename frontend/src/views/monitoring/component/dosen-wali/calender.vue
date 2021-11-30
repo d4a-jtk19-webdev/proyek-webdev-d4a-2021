@@ -1,7 +1,6 @@
 <template>
   <v-card
-    outlined
-    class="px-1 py-2 pb-0 mb-5"
+    class="mb-5"
     max-height="350"
   >
     <v-cols
