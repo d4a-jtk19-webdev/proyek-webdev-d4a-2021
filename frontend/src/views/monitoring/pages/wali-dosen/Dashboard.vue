@@ -34,7 +34,7 @@
       <v-col>
         <v-row>
           <!-- Table Section -->
-          <v-col cols="8">
+          <v-col :cols="isMobile? '12' : '8'">
             <v-data-table
               :headers="headers"
               :items="listMahasiswa"
