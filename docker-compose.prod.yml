@@ -26,3 +26,35 @@ services:
       - default
     depends_on:
       - db
+  keycloak:
+    image: quay.io/keycloak/keycloak:15.0.2
+    environment:
+      KEYCLOAK_USER: proyek3
+      KEYCLOAK_PASSWORD: proyek3
+      KEYCLOAK_FRONTEND_URL: http://localhost:14417/auth
+      DB_VENDOR: postgres
+      DB_ADDR: db
+      DB_USER: proyek3
+      DB_PASSWORD: proyek3
+      DB_DATABASE: proyek3
+      DB_SCHEMA: keycloak
+      PROXY_ADDRESS_FORWARDING: 'true'
+    ports:
+      - "14417:8080"
+    networks:
+      - default
+  akun-keycloak-proxy:
+    image: akun-keycloak-proxy
+    build:
+      context: ./akun-keycloak-proxy
+      target: production
+      dockerfile: prod.Dockerfile
+    ports:
+      - "14416:14416"
+    volumes:
+      - ./akun-keycloak-proxy:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - default
+    depends_on:
+      - db
