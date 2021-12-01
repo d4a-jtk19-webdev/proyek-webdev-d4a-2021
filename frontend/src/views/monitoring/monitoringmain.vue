@@ -1,5 +1,5 @@
 <template>
-  <v-app :style="{background : currentTheme.background}">
+  <v-app :style="{background : '#FAFAFA'}">
     <side-bar v-if="!isMobile" :items="isUserDosen ? sideBarItemsDsn : isUserMhs ? sideBarItemsMhs : sideBarItemsWlDsn"/>
     <nav-bar/>
     <v-main>

@@ -1,6 +1,6 @@
 <template>
   <v-card
-    class="mx-auto font-weight-bold"
+    class="font-weight-bold rounded-lg"
     max-width="400"
     outlined
   >

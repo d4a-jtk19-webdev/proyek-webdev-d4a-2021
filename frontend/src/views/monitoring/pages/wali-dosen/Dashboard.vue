@@ -10,11 +10,12 @@
       <template>
         <v-card
           color="#272343"
-          class="mb-5"
+          class="mb-5 rounded-lg"
           width="100%"
         >
           <v-row
-            class="justify-space-between">
+            class="justify-space-between"
+          >
             <v-col
               class="pa-10 white--text"
               cols="8"
@@ -38,9 +39,10 @@
             <v-data-table
               :headers="headers"
               :items="listMahasiswa"
-              :items-per-page="5"
+              :items-per-page="10"
               :style="{color: currentTheme.colorPrimary}"
-              class="text-lg-subtitle-1 font-weight">
+              class="text-lg-subtitle-1 font-weight v-sheet--outlined"
+            >
               <template v-slot:[`item.basic_identity`]="{ item }">
                 <v-row
                   class="py-6"
@@ -80,9 +82,8 @@
               </p>
             </template>
           </v-col>
-          <v-col cols="4">
+          <v-col :cols="isMobile? '12' : '4'">
             <!-- CALENDER & MATKUL SECTION -->
-            <calender/>
             <matkul/>
           </v-col>
         </v-row>
@@ -94,7 +95,6 @@
 import { mapGetters } from "vuex"
 import Breadcumbs from "@/views/shared/navigation/Breadcumbs"
 import ListMahasiswa from "../../../../datasource/network/monitoring/listMahasiswa"
-import Calender from "@/views/monitoring/component/dosen-wali/calender"
 import Matkul from "@/views/monitoring/component/dosen-wali/matkul"
 import Graph from "@/views/monitoring/component/dosen-wali/graph"
 
@@ -109,7 +109,7 @@ const gradients = [
 
 export default {
   name: "Dashboard",
-  components: { Breadcumbs, Calender, Matkul, Graph },
+  components: { Breadcumbs, Matkul, Graph },
   data () {
     return {
       breadcrumbItems: [
