@@ -42,7 +42,18 @@
               :items-per-page="10"
               :style="{color: currentTheme.colorPrimary}"
               class="text-lg-subtitle-1 font-weight v-sheet--outlined"
+              :custom-sort="sortAscending"
+              :search="search"
+              :custom-filter="searchMahasiswa"
             >
+              <template v-slot:top>
+                <v-text-field
+                  v-model="search"
+                  append-icon="mdi-magnify"
+                  label="Search"
+                  class="mx-4"
+                ></v-text-field>
+              </template>
               <template v-slot:[`item.basic_identity`]="{ item }">
                 <v-row
                   class="py-6"
@@ -58,7 +69,14 @@
                   <v-col
                     style="padding:0">
                     <div>
-                      {{ item.nama }}
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                          <div v-bind="attrs" v-on="on" class="text-truncate" style="cursor:default; max-width: 200px;">
+                            {{ item.nama }}
+                          </div>
+                        </template>
+                        <span>{{ item.nama }}</span>
+                      </v-tooltip>
                     </div>
                     <div class="text-caption">
                       {{ item.nim }}
@@ -112,6 +130,7 @@ export default {
   components: { Breadcumbs, Matkul, Graph },
   data () {
     return {
+      search: "",
       breadcrumbItems: [
         {
           text: "Monitoring",
@@ -129,7 +148,7 @@ export default {
           text: "MAHASISWA",
           align: "start",
           value: "basic_identity",
-          sortable: true
+          sortable: false
         },
         { text: "GRAPH", value: "graph_info", sortable: false },
         { text: "% TUGAS", align: "center", value: "tugas", sortable: false },
@@ -167,6 +186,22 @@ export default {
   async mounted () {
     var mahasiswa = await ListMahasiswa.getMahasiswa()
     this.listMahasiswa = mahasiswa
+  },
+  methods: {
+    sortAscending (items) {
+      items.sort((a, b) => {
+        if (a.nama >= b.nama) {
+          return 1
+        } else {
+          return -1
+        }
+      })
+      return items
+    },
+    searchMahasiswa (value, search, item) {
+      return (item.nim != null || item.nama != null) &&
+        (item.nim.indexOf(search) !== -1 || item.nama.toLowerCase().indexOf(search.toLowerCase()) !== -1)
+    }
   }
 }
 </script>
