@@ -1,38 +1,36 @@
 <template>
     <v-row :style="{color: currentTheme.onBackground}">
       <v-col cols="12">
-        <p class="text-h4 font-weight-bold">Dashboard</p>
-        <p class="text-subtitle-1 font-weight-bold">Tahun ajaran 2019</p>
-      </v-col>
-      <v-col cols="12">
         <breadcumbs :breadcrumb-items="breadcrumbItems"/>
       </v-col>
       <template>
-        <v-card
-          color="#272343"
-          class="mb-5 rounded-lg"
-          width="100%"
-        >
-          <v-row
-            class="justify-space-between"
+        <v-col cols="12">
+          <v-card
+            color="#272343"
+            class="mb-5 rounded-xl"
+            width="100%"
           >
-            <v-col
-              class="pa-10 white--text"
-              cols="8"
+            <v-row
+              class="justify-space-between"
             >
-              <div class="mb-5">
-                <p class="text-h4 font-weight-bold">Hallo, Sri Ratna Wulan</p>
-                <p class="text-subtitle-1 font-weight-bold">Data di bawah ini merupakan data mahasiswa</p>
-                <p class="text-subtitle-1 font-weight-bold">Kelas D4-3A Tahun Ajaran 2019</p>
+              <v-col
+                class="pa-10 white--text"
+                cols="8"
+              >
+                <div class="mb-5">
+                  <p class="text-h3 font-weight-bold">Hallo, Sri Ratna Wulan</p>
+                  <p class="text-subtitle-1 ma-0">Data di bawah ini merupakan data mahasiswa</p>
+                  <p class="text-subtitle-1"><b>Kelas D4-3A</b> Tahun Ajaran 2019</p>
+                </div>
+              </v-col>
+              <div class="mr-10" style="height:50">
+                <v-img :src="require('../../../../assets/vectorArt.png')" height="100%" width="auto"/>
               </div>
-            </v-col>
-            <div class="mr-10" style="height:50">
-              <v-img :src="require('../../../../assets/vectorArt.png')" height="100%" width="auto"/>
-            </div>
-          </v-row>
-        </v-card>
+            </v-row>
+          </v-card>
+        </v-col>
       </template>
-      <v-col>
+      <v-col width="100%">
         <v-row>
           <!-- Table Section -->
           <v-col :cols="isMobile? '12' : '8'">
@@ -41,7 +39,7 @@
               :items="listMahasiswa"
               :items-per-page="10"
               :style="{color: currentTheme.colorPrimary}"
-              class="text-lg-subtitle-1 font-weight v-sheet--outlined"
+              class="text-lg-subtitle-1 font-weight v-sheet--outlined rounded-lg"
             >
               <template v-slot:[`item.basic_identity`]="{ item }">
                 <v-row
