@@ -7,7 +7,7 @@ const Light = {
   colorSecondaryVariant: "#E3F6F5",
   colorOnPrimary: "#FFFFFF",
   colorOnSecondary: "#272343",
-  background: "#FFFFFF",
+  background: "#FAFAFA",
   surface: "#FFFFFF",
   onBackground: "#272343",
   onSurface: "#272343",

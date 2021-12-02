@@ -2,8 +2,8 @@
   <v-app :style="{background : currentTheme.background}">
     <side-bar v-if="!isMobile" :items="isUserDosen ? sideBarItemsDsn : isUserMhs ? sideBarItemsMhs : sideBarItemsWlDsn"/>
     <nav-bar/>
-    <v-main>
-      <v-container :class="isMobile? 'pa-5' : 'pa-12'">
+    <v-main :class="{'pl-14': isPad }">
+      <v-container :class="isMobile? 'pa-5' : isPad? 'pa-10' : 'pa-12'">
         <router-view/>
       </v-container>
       <v-overlay :value="isLoading">
@@ -78,7 +78,10 @@ export default {
       return "anda belum login , aya coba login"
     },
     isMobile () {
-      return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs
+      return this.$vuetify.breakpoint.xs
+    },
+    isPad () {
+      return this.$vuetify.breakpoint.sm
     },
     identity: function () {
       return this.$store.getters.identity
