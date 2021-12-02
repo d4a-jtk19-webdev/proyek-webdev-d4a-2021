@@ -359,6 +359,12 @@ const routes = [
         name: "MonitoringDaftarMatkul",
         component: () => import(/* webpackChunkName: "dashboard" */"../views/monitoring/pages/mahasiswa/monitoring/MonitoringMahasiswaDaftarMatKul")
       },
+      {
+        path: "/monitoring/wali-dosen/jadwal-mata-kuliah",
+        meta: { requiresAuth: false },
+        name: "JadwalMataKuliah",
+        component: () => import("../views/monitoring/pages/wali-dosen/JadwalMataKuliah")
+      },
       // {
       //   path: "/auth/reset-password",
       //   name: "ResetPassword",
@@ -369,6 +375,12 @@ const routes = [
         meta: { requiresAuth: false },
         name: "ListMahasiswa",
         component: () => import("../views/monitoring/pages/wali-dosen/ListMahasiswa")
+      },
+      {
+        path: "/monitoring/wali-dosen/dashboard",
+        meta: { requiresAuth: false },
+        name: "Dashboard",
+        component: () => import("../views/monitoring/pages/wali-dosen/Dashboard")
       }
     ]
   },

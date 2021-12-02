@@ -13,7 +13,7 @@
           :items="listMahasiswa"
           :items-per-page="10"
           :style="{color: currentTheme.colorPrimary}"
-          class="text-lg-subtitle-1 font-weight"
+          class="text-lg-subtitle-1 font-weight v-sheet--outlined rounded-lg"
           :custom-sort="sortAscending">
           <template v-slot:[`item.basic_identity`]="{ item }">
             <div style="width:22.375rem">
