@@ -1,6 +1,6 @@
 <template>
   <v-card
-    class="font-weight-bold rounded-lg"
+    class="font-weight-bold rounded-lg px-2"
     max-width="400"
     outlined
   >
@@ -20,22 +20,24 @@
         :key="item.jamke"
         class="tile"
       >
-        <v-list-item-title class="text-h5 text-center font-weight-black">{{ item.jamke }}</v-list-item-title>
+        <v-list-item-title class="text-h5 text-center font-weight-black" style="max-width: 70px;">
+          {{ item.jamke }}
+        </v-list-item-title>
         <v-divider
           vertical
           class="mr-1"
         >
         </v-divider>
-        <v-cols>
-          <v-list-item-title class="text-left text-subtitle-2 font-weight-black">
+        <v-cols style="max-width: 140px" class="text-lg-subtitle-1">
+          <v-list-item-subtitle class="text-left font-weight-black text-wrap">
             {{ item.matkul }}
-          </v-list-item-title>
+          </v-list-item-subtitle>
           <v-list-item-subtitle class="text-left">
             {{ item.dosen }}
           </v-list-item-subtitle>
         </v-cols>
 
-        <v-list-item-subtitle class="text-right jamke-font-size">
+        <v-list-item-subtitle class="text-right jamke-font-size pt-0">
           {{ item.jam }}
         </v-list-item-subtitle>
       </v-list-item>
@@ -75,7 +77,7 @@ export default {
     margin: 5px;
     border-radius: 10px;
     background: #E9E9E9;
-    padding: 10px
+    padding: 10px;
   }
   .tile:hover {
     background: #363740;

@@ -17,14 +17,14 @@
                 class="pa-10 white--text"
                 cols="8"
               >
-                <div class="mb-5">
-                  <p class="text-h3 font-weight-bold">Hallo, Sri Ratna Wulan</p>
-                  <p class="text-subtitle-1 ma-0">Data di bawah ini merupakan data mahasiswa</p>
-                  <p class="text-subtitle-1"><b>Kelas D4-3A</b> Tahun Ajaran 2019</p>
+                <div>
+                  <p :class="isMobile ? 'text-h4 font-weight-bold' : 'text-h3 font-weight-bold'">Hallo, Sri Ratna Wulan</p>
+                  <p class="text-subtitle-1 mb-0 mt-5">Data di bawah ini merupakan data mahasiswa</p>
+                  <p class="text-subtitle-1 ma-0"><b>Kelas D4-3A</b> Tahun Ajaran 2019</p>
                 </div>
               </v-col>
-              <div class="mr-10" style="height:50">
-                <v-img :src="require('../../../../assets/vectorArt.png')" height="100%" width="auto"/>
+              <div :class="isMobile? 'mr-6' : 'mr-10'">
+                <v-img :src="require('../../../../assets/vectorArt.png')" height="95%" width="95%"/>
               </div>
             </v-row>
           </v-card>
@@ -33,7 +33,7 @@
       <v-col width="100%">
         <v-row>
           <!-- Table Section -->
-          <v-col :cols="isMobile? '12' : '8'">
+          <v-col :cols="isMobile? '12' : '8'" :style="isMobile ? 'max-width: 100%;' : 'max-width: 674px;'">
             <v-data-table
               :headers="headers"
               :items="listMahasiswa"
@@ -67,9 +67,45 @@
               <template v-slot:[`item.graph_info`]>
                 <v-col
                 style="margin:0; padding:0"
+                class="stackSheet"
+                elevation="2"
                 >
-                <graph/>
+                  <v-sparkline
+                    :fill="dataGraph.fill"
+                    :gradient="dataGraph.positiveTugas"
+                    :line-width="dataGraph.width"
+                    :padding="dataGraph.padding"
+                    :smooth="dataGraph.radius || false"
+                    :value="dataGraph.value1"
+                    auto-draw
+                  ></v-sparkline>
+                  <v-sparkline
+                    :fill="dataGraph.fill"
+                    :gradient="dataGraph.negativePaham"
+                    :line-width="dataGraph.width"
+                    :padding="dataGraph.padding"
+                    :smooth="dataGraph.radius || false"
+                    :value="dataGraph.value2"
+                    auto-draw
+                    class="stackSpark"
+                  ></v-sparkline>
                 </v-col>
+              </template>
+              <template v-slot:[`item.tugasPersen`]="{ item }">
+                <div v-if="item.tugas.indexOf('+') !== -1">
+                  <span style="color: #0FB551;">{{ item.tugas }}</span>
+                </div>
+                <div v-else>
+                  <span style="color: #C42300;">{{ item.tugas }}</span>
+                </div>
+              </template>
+              <template v-slot:[`item.pahamPersen`]="{ item }">
+                <div v-if="item.pemahaman.indexOf('+') !== -1">
+                  <span style="color: #39AEE0;">{{ item.pemahaman }}</span>
+                </div>
+                <div v-else>
+                  <span style="color: #FF922E;">{{ item.pemahaman }}</span>
+                </div>
               </template>
             </v-data-table>
             <template v-slot:no-data>
@@ -80,7 +116,7 @@
               </p>
             </template>
           </v-col>
-          <v-col :cols="isMobile? '12' : '4'">
+          <v-col :cols="isMobile? '12' : '5'" :style="!isMobile ? 'max-width: 364px' : ''">
             <!-- CALENDER & MATKUL SECTION -->
             <matkul/>
           </v-col>
@@ -94,20 +130,18 @@ import { mapGetters } from "vuex"
 import Breadcumbs from "@/views/shared/navigation/Breadcumbs"
 import ListMahasiswa from "../../../../datasource/network/monitoring/listMahasiswa"
 import Matkul from "@/views/monitoring/component/dosen-wali/matkul"
-import Graph from "@/views/monitoring/component/dosen-wali/graph"
+// import Graph from "@/views/monitoring/component/dosen-wali/graph"
 
 const gradients = [
-  ["#222"],
-  ["#42b3f4"],
-  ["red", "orange", "yellow"],
-  ["purple", "violet"],
-  ["#00c6ff", "#F0F", "#FF0"],
-  ["#f72047", "#ffd200", "#1feaea"]
+  ["#0FB551"],
+  ["#C42300"],
+  ["#39AEE0"],
+  ["#FF922E"]
 ]
 
 export default {
   name: "Dashboard",
-  components: { Breadcumbs, Matkul, Graph },
+  components: { Breadcumbs, Matkul },
   data () {
     return {
       breadcrumbItems: [
@@ -127,27 +161,27 @@ export default {
           text: "MAHASISWA",
           align: "start",
           value: "basic_identity",
-          sortable: true
+          sortable: false
         },
         { text: "GRAPH", value: "graph_info", sortable: false },
-        { text: "% TUGAS", align: "center", value: "tugas", sortable: false },
-        { text: "% PAHAM", align: "center", value: "pemahaman", sortable: false }
+        { text: "% TUGAS", align: "center", value: "tugasPersen", sortable: false },
+        { text: "% PAHAM", align: "center", value: "pahamPersen", sortable: false }
       ],
       listMahasiswa: [
       ],
-      graphData: [
-        {
-          fill: true,
-          selectedGradient: gradients[4],
-          gradients,
-          padding: 0,
-          width: 1
-        }
-      ],
-      matkulItems: [
-        { title: "Dasar Dasar Pemrograman (Praktek)", icon: "mdi-view-dashboard" },
-        { title: "Matematika Diskit (Teori)", icon: "mdi-forum" }
-      ]
+      dataGraph: {
+        fill: false,
+        positiveTugas: gradients[0],
+        negativeTugas: gradients[1],
+        positivePaham: gradients[2],
+        negativePaham: gradients[3],
+        gradients,
+        padding: 0,
+        radius: 0,
+        value1: [1, 4, 6, 3, 4, 8],
+        value2: [9, 7, 6, 3, 4, 5],
+        width: 10
+      }
     }
   },
   computed: {
@@ -160,6 +194,9 @@ export default {
     },
     identity: function () {
       return this.$store.getters.identity
+    },
+    isPositive () {
+      return true
     }
   },
   async mounted () {
@@ -168,3 +205,13 @@ export default {
   }
 }
 </script>
+<style scoped>
+.stackSheet {
+    position: relative;
+}
+.stackSpark {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+</style>

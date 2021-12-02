@@ -14,12 +14,10 @@
 
 <script>
 const gradients = [
-  ["#222"],
-  ["#42b3f4"],
-  ["red", "orange", "yellow"],
-  ["purple", "violet"],
-  ["#00c6ff", "#F0F", "#FF0"],
-  ["#f72047", "#ffd200", "#1feaea"]
+  ["#0FB551"],
+  ["#C42300"],
+  ["#39AEE0"],
+  ["#FF922E"]
 ]
 
 export default {
@@ -28,8 +26,8 @@ export default {
     selectedGradient: gradients[0],
     gradients,
     padding: 0,
-    radius: 10,
-    value: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0],
+    radius: 0,
+    value: [0, 6, 3, 4, 8, 8, 5, 4, 3, 6, 7, 9],
     width: 10
   })
 }

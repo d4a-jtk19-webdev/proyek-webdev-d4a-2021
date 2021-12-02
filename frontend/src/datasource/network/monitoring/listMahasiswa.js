@@ -29,7 +29,7 @@ const getMahasiswa = async () => {
       email: "irsyad.muhammad.tif419@polban.ac.id",
       nomor_ponsel: "08124125163",
       pemahaman: "(+3%)",
-      tugas: "(+5%)"
+      tugas: "(-2%)"
     },
     {
       nama: "Ali Nurdin",
@@ -91,7 +91,7 @@ const getMahasiswa = async () => {
       foto: "https://akademik.polban.ac.id/fotomhsrekap/191524001.jpg",
       email: "afdal.ramdan.tif419@polban.ac.id",
       nomor_ponsel: "08124125163",
-      pemahaman: "(+3%)",
+      pemahaman: "(-4%)",
       tugas: "(+5%)"
     },
     {
