@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer clipped app permanent id="sidebar"  @transitionend="collapseSubItems" :style="{width : isPad?'3.5rem':''}">
+  <v-navigation-drawer clipped app permanent id="sidebar"  @transitionend="collapseSubItems" :style="{width : isPad?'3.5rem':'16rem'}">
     <v-list>
       <div
         v-for="(item, i) in navItem"
