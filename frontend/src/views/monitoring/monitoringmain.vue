@@ -61,7 +61,9 @@ export default {
         { text: "Monitoring Tugas Mahasiswa", icon: "mdi-monitor-multiple", to: "/monitoring/mahasiswa/matakuliah" }
       ],
       sideBarItemsWlDsn: [
-        { text: "List Mahasiswa", icon: "mdi-account-group", to: "/monitoring/wali-dosen/list-mahasiswa" }
+        { text: "Dashboard", icon: "mdi-view-dashboard", to: "/monitoring/wali-dosen/dashboard" },
+        { text: "List Mahasiswa", icon: "mdi-account-group", to: "/monitoring/wali-dosen/list-mahasiswa" },
+        { text: "Jadwal Mata Kuliah", icon: "mdi-format-list-bulleted", to: "/monitoring/wali-dosen/jadwal-mata-kuliah" }
       ],
       isUserDosen: false,
       isUserMhs: false
