@@ -361,7 +361,7 @@ const routes = [
       },
       {
         path: "/monitoring/wali-dosen/jadwal-mata-kuliah",
-        meta: { requiresAuth: false },
+        meta: { requiresAuth: true },
         name: "JadwalMataKuliah",
         component: () => import("../views/monitoring/pages/wali-dosen/JadwalMataKuliah")
       },
@@ -372,13 +372,13 @@ const routes = [
       // }
       {
         path: "/monitoring/wali-dosen/list-mahasiswa",
-        meta: { requiresAuth: false },
+        meta: { requiresAuth: true },
         name: "ListMahasiswa",
         component: () => import("../views/monitoring/pages/wali-dosen/ListMahasiswa")
       },
       {
         path: "/monitoring/wali-dosen/dashboard",
-        meta: { requiresAuth: false },
+        meta: { requiresAuth: true },
         name: "Dashboard",
         component: () => import("../views/monitoring/pages/wali-dosen/Dashboard")
       }
