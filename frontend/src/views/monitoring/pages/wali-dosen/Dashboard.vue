@@ -7,24 +7,25 @@
         <v-col cols="12">
           <v-card
             color="#272343"
-            class="mb-5 rounded-xl"
+            class="mb-5 rounded-lg"
             width="100%"
           >
             <v-row
               class="justify-space-between"
             >
               <v-col
-                class="pa-10 white--text"
+                :class="isPad? 'py-10 pl-10 white--text' : 'pa-10 white--text'"
                 cols="8"
+                :style="isPad? 'max-width: 440px' : ''"
               >
                 <div>
-                  <p :class="isMobile ? 'text-h4 font-weight-bold' : 'text-h3 font-weight-bold'">Hallo, Sri Ratna Wulan</p>
+                  <p :class="isPad? 'text-h4 font-weight-bold' : 'text-h3 font-weight-bold'">Hallo, Sri Ratna Wulan</p>
                   <p class="text-subtitle-1 mb-0 mt-5">Data di bawah ini merupakan data mahasiswa</p>
                   <p class="text-subtitle-1 ma-0"><b>Kelas D4-3A</b> Tahun Ajaran 2019</p>
                 </div>
               </v-col>
-              <div :class="isMobile? 'mr-6' : 'mr-10'">
-                <v-img :src="require('../../../../assets/vectorArt.png')" height="95%" width="95%"/>
+              <div :class="isPad? 'mr-0' : 'mr-10'">
+                <v-img :src="require('../../../../assets/vectorArt.png')" :height="isPad? 'auto' : '95%'" :width="isPad? '85%' : '95%'"/>
               </div>
             </v-row>
           </v-card>
@@ -33,7 +34,7 @@
       <v-col width="100%">
         <v-row>
           <!-- Table Section -->
-          <v-col :cols="isMobile? '12' : '8'" :style="isMobile ? 'max-width: 100%;' : 'max-width: 674px;'">
+          <v-col :cols="isPad? '12' : '8'" :style="isPad? 'max-width: 100%;' : 'max-width: 674px;'">
             <v-data-table
               :headers="headers"
               :items="listMahasiswa"
@@ -134,8 +135,8 @@
               </p>
             </template>
           </v-col>
-          <v-col :cols="isMobile? '12' : '5'" :style="!isMobile ? 'max-width: 364px' : ''">
-            <!-- CALENDER & MATKUL SECTION -->
+          <v-col :cols="isPad? '12' : '5'" :style="!isPad? 'max-width: 380px' : ''">
+            <!-- MATKUL SECTION -->
             <matkul/>
           </v-col>
         </v-row>
@@ -209,7 +210,10 @@ export default {
       isDark: "theme/getIsDark"
     }),
     isMobile () {
-      return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs
+      return this.$vuetify.breakpoint.xs
+    },
+    isPad () {
+      return this.$vuetify.breakpoint.sm
     },
     identity: function () {
       return this.$store.getters.identity

@@ -3,7 +3,7 @@
     <side-bar v-if="!isMobile" :items="isUserDosen ? sideBarItemsDsn : isUserMhs ? sideBarItemsMhs : sideBarItemsWlDsn"/>
     <nav-bar/>
     <v-main :class="{'pl-14': isPad }">
-      <v-container :class="isMobile? 'pa-5' : isPad? 'pa-10' : 'pa-12'">
+      <v-container :class="isMobile? 'pa-5' : isPad? 'pa-10' : 'px-8 py-5'">
         <router-view/>
       </v-container>
       <v-overlay :value="isLoading">
