@@ -64,3 +64,18 @@ services:
       - default
     depends_on:
       - db
+  backend:
+    image: backend
+    build:
+      context: .
+      dockerfile: prod.Dockerfile
+    ports:
+      - "14418:14418"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - default
+    depends_on:
+      - db
+      - keycloak
