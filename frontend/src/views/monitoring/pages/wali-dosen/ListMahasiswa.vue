@@ -1,13 +1,24 @@
 <template>
     <v-row :style="{color: currentTheme.onBackground}">
+      <div v-if="!isMobile">
+        <v-col cols="12">
+          <p class="text-h4 font-weight-bold">List Mahasiswa</p>
+          <p class="text-subtitle-1 font-weight-bold">Tahun ajaran 2019</p>
+        </v-col>
+        <v-col cols="12">
+          <breadcumbs :breadcrumb-items="breadcrumbItems"/>
+        </v-col>
+      </div>
+      <div v-else>
+        <v-col cols="12">
+          <breadcumbs :breadcrumb-items="breadcrumbItems"/>
+        </v-col>
+        <v-col cols="12">
+          <p class="text-h4 font-weight-bold" style="margin-bottom: 0">List Mahasiswa</p>
+          <p class="text-subtitle-1 font-weight-bold" style="margin-bottom: 0">Tahun ajaran 2019</p>
+        </v-col>
+      </div>
       <v-col cols="12">
-        <p class="text-h4 font-weight-bold">List Mahasiswa</p>
-        <p class="text-subtitle-1 font-weight-bold">Tahun ajaran 2019</p>
-      </v-col>
-      <v-col cols="12">
-        <breadcumbs :breadcrumb-items="breadcrumbItems"/>
-      </v-col>
-      <v-col cols="12" >
         <v-data-table
           :headers="headers"
           :items="listMahasiswa"
@@ -27,12 +38,15 @@
             ></v-text-field>
           </template>
           <template v-slot:[`item.basic_identity`]="{ item }">
-            <div style="width:22.375rem">
+            <div
+              :style="[isMobile ? {} : {'width': '22.375rem'}]"
+            >
               <v-row
-                class="py-6"
+                :class="[!isMobile ? 'py-6' : '']"
                 style="margin:0; gap:1.375rem"
                 :justify="end">
                 <v-avatar
+                  v-if="!isMobile"
                   size="48">
                   <v-img
                     :src="item.foto"
@@ -44,7 +58,9 @@
                   <div>
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on, attrs }">
-                        <div v-bind="attrs" v-on="on" class="text-truncate" style="cursor:default; max-width: 200px;">
+                        <div v-bind="attrs" v-on="on" class="text-truncate"
+                        :style="isMobile ? {'font-size': '0.75rem'} : {}"
+                        style="cursor:default; max-width: 200px;">
                           {{ item.nama }}
                         </div>
                       </template>
@@ -112,7 +128,7 @@ export default {
       isDark: "theme/getIsDark"
     }),
     isMobile () {
-      return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs
+      return this.$vuetify.breakpoint.xs
     },
     identity: function () {
       return this.$store.getters.identity
@@ -140,3 +156,30 @@ export default {
   }
 }
 </script>
+<style scouped>
+  .v-data-table-header-mobile{
+    display : none;
+  }
+  .v-data-table__mobile-row__header{
+    font-size: 0.75rem;
+    color : #9FA2B4
+  }
+  div .text-truncate {
+      color: #252733
+  }
+  .text-caption {
+    color: #7b7b7b
+  }
+  @media screen and (max-width: 600px) {
+    div .v-data-footer__select, div .v-text-field__details{
+      display: none;
+    }
+    div .text-truncate {
+      padding-top: 20px;
+      max-width: 60px;
+    }
+    .v-data-footer__pagination{
+      margin: 0 5px 0 24px
+    }
+  }
+</style>
