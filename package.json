@@ -3,5 +3,8 @@
   "workspaces": [
     "postgres-database",
     "backend"
-  ]
+  ],
+  "devDependencies": {
+    "lint": "^0.7.0"
+  }
 }

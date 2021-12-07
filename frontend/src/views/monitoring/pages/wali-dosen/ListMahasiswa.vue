@@ -7,61 +7,58 @@
       <v-col cols="12">
         <breadcumbs :breadcrumb-items="breadcrumbItems"/>
       </v-col>
-      <v-col cols="12">
+      <v-col cols="12" >
         <v-data-table
           :headers="headers"
           :items="listMahasiswa"
-          :items-per-page="5"
+          :items-per-page="10"
           :style="{color: currentTheme.colorPrimary}"
-          class="text-lg-subtitle-1 font-weight"
-          :custom-sort="sortAscending">
+          class="text-lg-subtitle-1 font-weight v-sheet--outlined rounded-lg"
+          :custom-sort="sortAscending"
+          :search="search"
+          :custom-filter="searchMahasiswa"
+        >
+          <template v-slot:top>
+            <v-text-field
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="Search"
+              class="mx-4"
+            ></v-text-field>
+          </template>
           <template v-slot:[`item.basic_identity`]="{ item }">
-            <v-row
-              class="py-6"
-              style="margin:0; gap:1.375rem"
-              :justify="end">
-              <v-avatar
-                size="48">
-                <v-img
-                  :src="item.foto"
-                  position="start"
-                />
-              </v-avatar>
-              <v-col
-                style="padding:0">
-                <div>
-                  {{ item.nama }}
-                </div>
-                <div class="text-caption">
-                  {{ item.nim }}
-                </div>
-              </v-col>
-            </v-row>
+            <div style="width:22.375rem">
+              <v-row
+                class="py-6"
+                style="margin:0; gap:1.375rem"
+                :justify="end">
+                <v-avatar
+                  size="48">
+                  <v-img
+                    :src="item.foto"
+                    position="start"
+                  />
+                </v-avatar>
+                <v-col
+                  style="padding:0">
+                  <div>
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <div v-bind="attrs" v-on="on" class="text-truncate" style="cursor:default; max-width: 200px;">
+                          {{ item.nama }}
+                        </div>
+                      </template>
+                      <span>{{ item.nama }}</span>
+                    </v-tooltip>
+                  </div>
+                  <div class="text-caption">
+                    {{ item.nim }}
+                  </div>
+                </v-col>
+              </v-row>
+            </div>
           </template>
         </v-data-table>
-        <template v-slot:[`item.basic_identity`]="{ item }">
-            <v-row
-            class="py-6"
-            style="margin:0; gap:1.375rem"
-            :justify="end">
-              <v-avatar
-              size="48">
-                <v-img
-                :src="item.foto"
-                position="start"
-                />
-              </v-avatar>
-              <v-col
-              style="padding:0">
-                <div>
-                  {{item.nama}}
-                </div>
-                <div class="text-caption">
-                  {{item.nim}}
-                </div>
-              </v-col>
-            </v-row>
-          </template>
         <template v-slot:no-data>
           <p
             :style="{color: currentTheme.colorPrimary}"
@@ -83,6 +80,7 @@ export default {
   components: { Breadcumbs },
   data () {
     return {
+      search: "",
       breadcrumbItems: [
         {
           text: "Monitoring",
@@ -126,7 +124,6 @@ export default {
   },
   methods: {
     sortAscending (items) {
-      console.log(items)
       items.sort((a, b) => {
         if (a.nama >= b.nama) {
           return 1
@@ -135,6 +132,10 @@ export default {
         }
       })
       return items
+    },
+    searchMahasiswa (value, search, item) {
+      return (item.nim != null || item.nama != null) &&
+        (item.nim.indexOf(search) !== -1 || item.nama.toLowerCase().indexOf(search.toLowerCase()) !== -1)
     }
   }
 }

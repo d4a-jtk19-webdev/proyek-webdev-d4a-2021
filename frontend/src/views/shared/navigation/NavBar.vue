@@ -5,11 +5,11 @@
       clipped-left
       fixed
       max-height="75"
-      v-if="!$vuetify.breakpoint.mobile"
+      v-if="!isMobile()"
     >
-      <v-card @click="onClickedHome()" outlined color="transparent" height="50" width="320" class="pt-3">
+      <v-card @click="onClickedHome()" outlined color="transparent" height="50" width="320" class="d-flex align-center">
         <v-row align="center">
-          <v-img :src="require('../../../assets/polban.png')" max-width="45" contain class="mx-4"/>
+          <v-img :src="require('../../../assets/polban.png')" max-width="39" contain class="mx-4"/>
           <v-col class="pa-0">
             <v-toolbar-title :style="{ color: currentTheme.colorPrimary }">Politeknik Negeri Bandung</v-toolbar-title>
           </v-col>
@@ -205,6 +205,12 @@ export default {
     },
     search () {
       console.log("Search clicked")
+    },
+    isMobile () {
+      return this.$vuetify.breakpoint.xs
+    },
+    isPad () {
+      return this.$vuetify.breakpoint.ms
     },
     async onClickedHome () {
       if (this.$router.currentRoute.path !== this.toHome) {

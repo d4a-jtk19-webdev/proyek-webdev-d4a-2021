@@ -1,9 +1,9 @@
 <template>
-  <v-app :style="{background : '#FAFAFA'}">
+  <v-app :style="{background : currentTheme.background}">
     <side-bar v-if="!isMobile" :items="isUserDosen ? sideBarItemsDsn : isUserMhs ? sideBarItemsMhs : sideBarItemsWlDsn"/>
     <nav-bar/>
-    <v-main>
-      <v-container :class="isMobile? 'pa-5' : 'py-6 px-10'">
+    <v-main :class="{'pl-14': isPad }">
+      <v-container :class="isMobile? 'pa-5' : isPad? 'pa-10' : 'pa-12'">
         <router-view/>
       </v-container>
       <v-overlay :value="isLoading">
@@ -17,10 +17,12 @@
 </template>
 
 <script>
+
 import * as Keycloak from "keycloak-js"
 import SideBar from "@/views/shared/navigation/SideBar"
 import NavBar from "@/views/shared/navigation/NavBar"
 import { mapGetters, mapActions } from "vuex"
+
 /*
   Token Access interval adalah 5 jam maka
   dilakukan perhitungan sebagai berikut :
@@ -59,7 +61,6 @@ export default {
         { text: "Monitoring Tugas Mahasiswa", icon: "mdi-monitor-multiple", to: "/monitoring/mahasiswa/matakuliah" }
       ],
       sideBarItemsWlDsn: [
-        { text: "Dashboard", icon: "mdi-view-dashboard", to: "/monitoring/wali-dosen/dashboard" },
         { text: "List Mahasiswa", icon: "mdi-account-group", to: "/monitoring/wali-dosen/list-mahasiswa" }
       ],
       isUserDosen: false,
@@ -77,7 +78,10 @@ export default {
       return "anda belum login , aya coba login"
     },
     isMobile () {
-      return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs
+      return this.$vuetify.breakpoint.xs
+    },
+    isPad () {
+      return this.$vuetify.breakpoint.sm
     },
     identity: function () {
       return this.$store.getters.identity
@@ -144,6 +148,8 @@ export default {
       for (var i in roles) {
         if (roles[i] === "dosen") {
           this.isUserDosen = true
+        } else if (roles[i] === "mahasiswa") {
+          this.isUserMhs = true
         }
       }
       console.log("roles " + this.isUserDosen)
