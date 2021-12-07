@@ -1,7 +1,6 @@
 <template>
   <v-card
     class="font-weight-bold rounded-lg px-2"
-    max-width="400"
     outlined
   >
     <div class="text-right">
@@ -28,14 +27,14 @@
           class="mr-1"
         >
         </v-divider>
-        <v-cols style="max-width: 140px" class="text-lg-subtitle-1">
-          <v-list-item-subtitle class="text-left font-weight-black text-wrap">
+        <v-col :style="isMobile? '' : 'max-width: 140px'" class="text-lg-subtitle-1">
+          <v-list-item-subtitle :class="isMobile? 'text-left font-weight-black' : 'text-left font-weight-black text-wrap'" :style="isMobile? '' : 'max-height: 34px; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow:hidden; text-overflow: ellipsis; display: -webkit-box;'">
             {{ item.matkul }}
           </v-list-item-subtitle>
           <v-list-item-subtitle class="text-left">
             {{ item.dosen }}
           </v-list-item-subtitle>
-        </v-cols>
+        </v-col>
 
         <v-list-item-subtitle class="text-right jamke-font-size pt-0">
           {{ item.jam }}
@@ -57,17 +56,28 @@ export default {
         },
         {
           jamke: "3-4",
-          matkul: "Pengembangan Web (T)",
+          matkul: "Pengembangan Website (T)",
           dosen: "Joe Lian Min",
-          jam: "07.00 - 07.50"
+          jam: "07.50 - 08.40"
         },
         {
           jamke: "5-10",
-          matkul: "Pengembangan Web (P)",
+          matkul: "Pengembangan Website (P)",
           dosen: "Lukmannul Hakim",
+          jam: "07.00 - 07.50"
+        },
+        {
+          jamke: "11-16",
+          matkul: "Manajemen Proyek Rekayasa Perangkat Lunak (P)",
+          dosen: "Didik Suwito, Ardianto",
           jam: "07.00 - 07.50"
         }
       ]
+    }
+  },
+  computed: {
+    isMobile () {
+      return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs
     }
   }
 }

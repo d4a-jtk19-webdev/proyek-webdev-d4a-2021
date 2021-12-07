@@ -58,7 +58,7 @@
                     <div>
                       {{ item.nama }}
                     </div>
-                    <div class="text-caption">
+                    <div class="text-caption" style="color: #7B7B7B">
                       {{ item.nim }}
                     </div>
                   </v-col>
