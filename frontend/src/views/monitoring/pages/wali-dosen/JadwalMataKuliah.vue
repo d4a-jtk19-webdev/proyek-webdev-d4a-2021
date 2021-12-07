@@ -52,8 +52,8 @@
                     <v-col class="pa-0 ">
                       <v-sheet class="d-flex justify-space-between flex-column align-end">
                         <v-sheet class="rounded-lg grey lighten-2 px-3 py-1">
-                          <span class="text-md-h5 text-sm-h6 font-weight-bold">07.00 </span>
-                          <span class="text-md-h5 text-sm-h6">- 08.40 : WIB</span>
+                          <span class="font-weight-bold" :style="isPad?{'font-size':'1rem'}:{'font-size':'1.5rem'}">07.00 </span>
+                          <span :style="isPad?{'font-size':'1rem'}:{'font-size':'1.5rem'}">- 08.40 (WIB)</span>
                         </v-sheet>
                       </v-sheet>
                     </v-col>
