@@ -1,5 +1,9 @@
 <template>
-    <v-row :style="{color: currentTheme.onBackground}">
+  <div>
+    <v-row
+      :style="{color: currentTheme.onBackground}"
+      v-if="!isMobile"
+    >
       <v-col cols="12" class="pb-1">
         <breadcumbs :breadcrumb-items="breadcrumbItems"/>
       </v-col>
@@ -79,16 +83,35 @@
         </v-tabs-items>
       </v-col>
     </v-row>
+    <v-row v-else>
+      <v-col cols="12" class="pb-1">
+        <breadcumbs :breadcrumb-items="breadcrumbItems"/>
+      </v-col>
+      <v-col cols="12">
+        <v-card elevation="0">
+          <p class="mb-0 text-h4 font-weight-bold">Jadwal Mata Kuliah</p>
+          <p class="mb-5">
+            <span class="text-body-2 font-weight-bold">Kelas D4 - 3A Semester 5</span>
+            <span class="text-body-2 font-weight-regular"> Tahun ajaran 2021/2022</span>
+          </p>
+          <mobile-tabs-mata-kuliah
+            :days="days"
+          />
+        </v-card>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex"
 import Breadcumbs from "@/views/shared/navigation/Breadcumbs"
+import MobileTabsMataKuliah from "../../component/dosen/MobileTabsMataKuliah.vue"
 // import ListMahasiswa from "../../../../datasource/network/monitoring/listMahasiswa"
 
 export default {
   name: "JadwalMataKuliah",
-  components: { Breadcumbs },
+  components: { Breadcumbs, MobileTabsMataKuliah },
   data () {
     return {
       breadcrumbItems: [
