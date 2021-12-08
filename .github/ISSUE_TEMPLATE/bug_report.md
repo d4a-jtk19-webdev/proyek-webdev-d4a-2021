@@ -15,7 +15,6 @@ Langkah-langkah untuk menemukan bug yang sama:
 1. ...
 2. ...
 3. ...
-4. ...
 
 **Ekspektasi**
 Hal yang seharusnya terjadi apabila berjalan dengan benar
@@ -25,7 +24,7 @@ Tambahkan screenshot untuk bug yang ditemukan
 
 **Environment**
  - OS: [Contoh: Windows, iOS]
- - Browser [Contoh: Chrom, Safari]
+ - Browser [Contoh: Chrome, Safari]
 Sertakan versi juga untuk OS dan browser yang digunakan
 
 **Cara Perbaikan yang sudah Dicoba**
