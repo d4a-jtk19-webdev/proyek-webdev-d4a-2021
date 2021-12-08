@@ -58,3 +58,18 @@ services:
       - default
     depends_on:
       - db
+  front-end:
+    image: front-end
+    build:
+      context: ./frontend
+      target: production
+      dockerfile: prod.Dockerfile
+    ports:
+      - "14415:14415"
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - default
+    depends_on:
+      - service-monitoring
