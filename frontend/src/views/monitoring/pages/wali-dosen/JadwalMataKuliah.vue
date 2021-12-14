@@ -34,23 +34,23 @@
           >
             <v-sheet>
               <v-card class="pa-5 d-flex flex-no-wrap">
-                <v-sheet rounded="lg" class="green lighten-4 pa-3 col-3">
+                <v-sheet rounded="lg" class="green lighten-4 pa-3 col-md-2 col-sm-3">
                     <div class="rounded-lg px-md-6 px-sm-3 py-sm-1 py-md-7 text-h4 text-center white font-weight-bold">
                       1 - 2
                     </div>
                 </v-sheet>
-                <v-sheet class="col-9 pl-5 pa-0">
+                <v-sheet class="col-md-10 col-sm-9 pl-5 pa-0">
                   <div class="d-flex flex-no-wrap mb-md-13 mb-sm-7">
                     <v-col class="pa-0 col-7">
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
-                          <div v-bind="attrs" v-on="on" class="text-md-h4 text-sm-h5 text-truncate font-weight-bold mb-1" style="cursor:default">Manajemen Proyek Rekayasa Perangkat Lunak</div>
+                          <div v-bind="attrs" v-on="on" class="text-truncate font-weight-bold mb-1" style="cursor:default" :style="[isMobile ? {'font-size':'1.125rem'} : isPad ? {'font-size':'1.5rem'} : {'font-size':'1.875rem'}]">Manajemen Proyek Rekayasa Perangkat Lunak</div>
                         </template>
                         <span>Manajemen Proyek Rekayasa Perangkat Lunak</span>
                       </v-tooltip>
                       <v-sheet class="d-flex flex-no-wrap align-center" style="gap:1rem">
-                        <v-card-subtitle class="text-md-h6 text-sm-subtitle-2" style="padding:0">16TIN5063</v-card-subtitle>
-                        <v-card-subtitle class=" text-md-h5 text-sm-subtitle-1 font-weight-bold" style="color:#232323; padding:0">3 SKS</v-card-subtitle>
+                        <v-card-subtitle :style="[isMobile ? {'font-size':'0.75rem'} : isPad ? {'font-size':'0.875rem'} : {'font-size':'1.125rem'}]" style="padding:0">16TIN5063</v-card-subtitle>
+                        <v-card-subtitle class="font-weight-bold" :style="[isMobile ? {'font-size':'0.75rem'} : isPad ? {'font-size':'1rem'} : {'font-size':'1.125rem'}]" style="color:#232323; padding:0">3 SKS</v-card-subtitle>
                       </v-sheet>
                     </v-col>
                     <v-col class="pa-0 ">
@@ -63,17 +63,17 @@
                     </v-col>
                   </div>
                   <div class="d-flex flex-column">
-                      <div class="text-h6 mb-3">Dosen Pengampu:</div>
+                      <div class="mb-3" :style="[isMobile ? {'font-size':'0.875rem'} : {'font-size':'1.125rem'}]">Dosen Pengampu:</div>
                       <div class="d-flex flex-row-nowrap justify-space-between">
                         <v-sheet class="d-flex flex-wrap justify-start align-center" style="gap:1rem">
-                          <div class="rounded-pill green grey lighten-2 px-4 py-2 text-truncate">
+                          <div class="rounded-pill green grey lighten-2 px-4 py-2 text-truncate" :style="[isMobile ? {'font-size':'0.75rem'} : isPad ? {'font-size':'0.75rem'} : {'font-size':'1rem'}]">
                             Didik Suwito
                           </div>
-                          <div class="rounded-pill green grey lighten-2 px-4 py-2 text-truncate">
+                          <div class="rounded-pill green grey lighten-2 px-4 py-2 text-truncate" :style="[isMobile ? {'font-size':'0.75rem'} : isPad ? {'font-size':'0.75rem'} : {'font-size':'1rem'}]">
                             Transmissia Semiawan
                           </div>
                         </v-sheet>
-                        <div class="d-flex align-center rounded-lg green lighten-4 px-4 text-center text-h6">Teori</div>
+                        <div class="d-flex align-center rounded-lg green lighten-4 px-4 text-center" style="font-weight:600" :style="[isMobile ? {'font-size':'1.125rem'} : isPad ? {'font-size':'1.125rem'} : {'font-size':'1.25rem'}]">Teori</div>
                       </div>
                   </div>
                 </v-sheet>
