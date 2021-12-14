@@ -64,8 +64,8 @@ services:
       - default
     depends_on:
       - db
-  front-end:
-    image: front-end
+  frontend:
+    image: frontend
     build:
       context: ./frontend
       target: production
@@ -77,8 +77,6 @@ services:
       - /usr/src/app/node_modules
     networks:
       - default
-    depends_on:
-      - service-monitoring
   backend:
     image: backend
     build:
