@@ -7,7 +7,7 @@ import dosen from '@proyek3/postgres-database/models/Dosen'
 import jabatan from '@proyek3/postgres-database/models/Jabatan'
 import jurusan from '@proyek3/postgres-database/models/Jurusan'
 import jadwal from '@proyek3/postgres-database/models/Jadwal'
-import studi from './models/Studi'
+import studi from '@proyek3/postgres-database/models/Studi'
 
 export const setAssociations = () => {
   programStudi.hasMany(mataKuliah, {
