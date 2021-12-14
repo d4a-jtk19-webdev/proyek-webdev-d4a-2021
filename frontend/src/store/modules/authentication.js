@@ -25,7 +25,7 @@ const authentication = {
 
   actions: {
     async authenticate ({ commit }, forceLogin = false) {
-      const auth = await keycloak.init({ onLoad: "login-required" })
+      const auth = await keycloak.init({ onLoad: "login-required", checkLoginIframe: false })
 
       commit("SET_IDENTITY", keycloak.tokenParsed)
 
