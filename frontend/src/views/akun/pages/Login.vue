@@ -130,7 +130,7 @@ export default {
       realm: process.env.VUE_APP_KEYCLOAK_REALM,
       clientId: process.env.VUE_APP_KEYCLOAK_CLIENT_ID
     })
-    const auth = await keycloak.init({ onLoad: "check-sso", checkLoginIframe: false })
+    const auth = await keycloak.init({ onLoad: "check-sso" })
 
     if (auth) {
       setInterval(async () => {
@@ -147,7 +147,7 @@ export default {
 
     if (!this.action) {
       sessionStorage.setItem("login.locationHref", window.location.href)
-      await keycloak.init({ onLoad: "login-required", checkLoginIframe: false })
+      await keycloak.init({ onLoad: "login-required" })
 
       window.location.reload()
 

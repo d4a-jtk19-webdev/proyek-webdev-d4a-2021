@@ -35,7 +35,7 @@ export default {
       realm: "staging",
       clientId: "public"
     })
-    const auth = await keycloak.init({ onLoad: "check-sso", checkLoginIframe: false })
+    const auth = await keycloak.init({ onLoad: "check-sso" })
 
     if (auth || !this.action) {
       this.$router.push({ path: "/akun" })
