@@ -61,4 +61,15 @@ export const setAssociations = () => {
   perkuliahan.hasMany(jadwal, {
     foreignKey: 'id_perkuliahan'
   })
+  dosen.belongsToMany(jabatan, {
+    through: 'Menjabat',
+    as: 'jabatan',
+    foreignKey: 'nip'
+  })
+  jabatan.belongsToMany(dosen, {
+    through: 'Menjabat',
+    as: 'dosen',
+    foreignKey: 'id_jabatan'
+  })
+  
 }
