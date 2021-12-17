@@ -175,8 +175,8 @@ export const getSkalaPemahamanByMahasiswa = async (nim) => {
       var tes = sequelize.cast(sequelize.col('Studis->Subtugas.skala_pemahaman'), 'int')
       const average = await Mahasiswa.findAll({
           attributes: [
-              'nama',
-              'nim',
+              // 'nama',
+              // 'nim',
               [sequelize.fn('avg', tes), 'avg']
           ],
           where: {

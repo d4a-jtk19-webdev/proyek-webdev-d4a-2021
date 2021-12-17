@@ -269,12 +269,13 @@ export const getAllSubtugasByTugas = async (req, res, next) => {
 export const getSkalaPemahamanByMahasiswa = async(req, res, next) => {
     try {
         const nim = req.params.nim
-        const result = await SubtugasDAO.getSkalaPemahamanByMahasiswa(nim)
+        const data = await SubtugasDAO.getSkalaPemahamanByMahasiswa(nim)
         res.json({
             message: 'Get Skala Pemahaman By Mahasiswa NIM Berhasil',
-            data: {
-                result
-            }
+            data
+            // data: {
+            //     result
+            // }
         })
     } catch (error) {
         next(error)
