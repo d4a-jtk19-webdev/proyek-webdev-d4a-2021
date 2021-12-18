@@ -32,5 +32,5 @@ router.get('/common/getPerkuliahanBynimByIdMatkul/', PerkuliahanController.getPe
 router.get('/common/getAllTugasMahasiswa/:nim', TugasController.getAllTugasMahasiswa)
 router.get('/common/getAllTugasMahasiswaByid_tugas/:id', TugasController.getAllTugasMahasiswaByid_tugas)
 router.get('/commom/getAllMatkulLearnedByMahasiswa/:nim', MatkulController.getAllMatkulLearnedByMahasiswa)
-
+router.get('/common/getSkalaPemahamanByMahasiswa/:nim', SubtugasController.getSkalaPemahamanByMahasiswa)
 export default router
