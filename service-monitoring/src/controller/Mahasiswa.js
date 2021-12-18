@@ -182,3 +182,37 @@ export const getRekapSubtugasMahasiswaById = async (req, res, next) => {
     next(error)
   }
 }
+
+export const getProgressSubtugasByNIM = async (req, res, next) => {
+  try {
+    const { NIM } = req.params;
+    const startDuration = new Date(req.query.start);
+    const endDuration = new Date(req.query.end);
+    var progressSubtugas = [];
+
+    var incrementDate = new Date(req.query.start)
+    incrementDate.setDate(incrementDate.getDate() + 7);
+    while (incrementDate.getTime() < endDuration.getTime()) {
+      const tugasselesai = await MahasiswaDAO.getTugasSelesaiByNIM(NIM, startDuration, incrementDate);
+      const alltugas = await MahasiswaDAO.getSemuaTugasByNIM(NIM, startDuration, incrementDate);
+      console.log(tugasselesai);
+      console.log(alltugas[0])
+      // console.log(alltugas[0].jml_tugas);
+
+      // var progress = tugasselesai[0] == undefined ? 0 : (tugasselesai[0].jml_tugas / alltugas[0].jml_tugas);
+      progressSubtugas.push('0');
+
+      // add date to next week
+      incrementDate.setDate(incrementDate.getDate() + 7);
+    }
+    
+    res.status(200).json({
+      message: 'get progress subtugas Mahasiswa by Id success',
+      data: {
+        progressSubtugas
+      }
+    })
+  } catch (error) {
+    next(error)
+  }
+}
