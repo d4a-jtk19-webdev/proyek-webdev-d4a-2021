@@ -147,7 +147,7 @@
 <script>
 import { mapGetters } from "vuex"
 import Breadcumbs from "@/views/shared/navigation/Breadcumbs"
-import ListMahasiswa from "../../../../datasource/network/monitoring/listMahasiswa"
+import ListMahasiswa from "../../../../datasource/network/monitoring/TABELDASHBOARD"
 import Matkul from "@/views/monitoring/component/dosen-wali/matkul"
 // import Graph from "@/views/monitoring/component/dosen-wali/graph"
 

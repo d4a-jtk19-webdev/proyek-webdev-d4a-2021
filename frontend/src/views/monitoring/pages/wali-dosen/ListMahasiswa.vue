@@ -49,7 +49,7 @@
                   v-if="!isMobile"
                   size="48">
                   <v-img
-                    :src="item.foto"
+                    :src="item.url_foto"
                     position="start"
                   />
                 </v-avatar>
