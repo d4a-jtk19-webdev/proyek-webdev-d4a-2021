@@ -174,8 +174,6 @@ export const getRekapSubtugasById = async (nim) => {
 
 export const getTugasSelesaiByNIM = async (nim, startDuration, endDuration) => {
   try {
-    console.log(startDuration);
-    console.log(endDuration);
     const tugasselesai = await sequelize.query(
       ' SELECT mhs.nim, count(sub_tgs.status_subtugas) "jml_tugas" FROM "Mahasiswa" mhs LEFT JOIN "Studi" std ON (mhs.nim = std.id_mahasiswa) LEFT JOIN "Subtugas" sub_tgs ON (sub_tgs.id_studi = std.id) WHERE mhs.nim = ? AND sub_tgs.status_subtugas = \'t\' AND sub_tgs.tenggat > ? AND sub_tgs.tenggat  < ? GROUP BY mhs.nim',
       {

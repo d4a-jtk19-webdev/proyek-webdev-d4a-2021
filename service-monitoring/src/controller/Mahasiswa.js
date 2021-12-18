@@ -195,12 +195,9 @@ export const getProgressSubtugasByNIM = async (req, res, next) => {
     while (incrementDate.getTime() < endDuration.getTime()) {
       const tugasselesai = await MahasiswaDAO.getTugasSelesaiByNIM(NIM, startDuration, incrementDate);
       const alltugas = await MahasiswaDAO.getSemuaTugasByNIM(NIM, startDuration, incrementDate);
-      console.log(tugasselesai);
-      console.log(alltugas[0])
-      // console.log(alltugas[0].jml_tugas);
 
-      // var progress = tugasselesai[0] == undefined ? 0 : (tugasselesai[0].jml_tugas / alltugas[0].jml_tugas);
-      progressSubtugas.push('0');
+      const progress = tugasselesai[0] == undefined ? 0 : (tugasselesai[0].jml_tugas / alltugas[0].jml_tugas);
+      progressSubtugas.push(progress);
 
       // add date to next week
       incrementDate.setDate(incrementDate.getDate() + 7);
