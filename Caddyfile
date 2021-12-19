@@ -1,0 +1,11 @@
+http://akun.localhost {
+  handle_path /keycloak-proxy/* {
+    reverse_proxy localhost:14416
+  }
+
+  reverse_proxy localhost:14415
+}
+
+http://frontend.localhost {
+  reverse_proxy localhost:14415
+}
