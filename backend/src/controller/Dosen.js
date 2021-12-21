@@ -148,20 +148,20 @@ export const getPengajarByKMTA = async (req, res, next) => {
   }
 }
 
-// get jadwal by wali dosen
-export const getJadwalByWalDos = async (req, res, next) => {
-  try{
-    // const hari = req.query.hari
-    const id_perkuliahan = parseInt(req.params.id_perkuliahan)
-    const resultJadwal = await DosenDAO.getJadwalByWalDos(
-      id_perkuliahan
-    )
-    if (resultJadwal instanceof Error) throw resultJadwal
-    res.status(200).json({
-      message: 'Sukses retrieve data jadwal by waldos',
-      data: resultJadwal
+export const getJabatanByNIP = async (req, res, next) => {
+  try {
+    const { NIP } = req.params
+    const dosen = await DosenDAO.findJabatanByNIP(NIP)
+    const jabatan = dosen.jabatan.map((value) => {
+      return value.nama_jabatan;
     })
-  } catch (error){
+    res.status(200).json({
+      message: 'get jabatan by NIP sukses',
+      data: jabatan
+    })
+  } catch (error) {
     next(error)
   }
+  
 }
+

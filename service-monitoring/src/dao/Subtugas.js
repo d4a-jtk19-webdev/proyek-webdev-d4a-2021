@@ -1,6 +1,8 @@
 import Subtugas from '../models/Subtugas'
 import sequelize from '../db.js'
 import db from '../db'
+import Studi from '../models/Studi'
+import Mahasiswa from '../models/Mahasiswa'
 
 export const insertOneSubtugas = async (
   nama_subtugas,
@@ -165,5 +167,39 @@ export const getSubtugasByMahasiswa = async (nim) => {
   }
   catch (error) {
     return Promise.reject(error)
+  }
+}
+
+export const getSkalaPemahamanByMahasiswa = async (nim) => {
+  try {
+      var tes = sequelize.cast(sequelize.col('Studis->Subtugas.skala_pemahaman'), 'int')
+      const average = await Mahasiswa.findAll({
+          attributes: [
+              // 'nama',
+              // 'nim',
+              [sequelize.fn('avg', tes), 'avg']
+          ],
+          where: {
+              nim: nim
+          },
+          include: [{
+              model: Studi,
+              attributes: [
+              ],
+              where: {
+                  id_mahasiswa: nim
+              },
+              include: [{
+                  model: Subtugas,
+                  attributes: [
+                  ],
+                  raw: true
+              }]
+          }],
+          group: ['Mahasiswa.nim']
+      })
+      return average
+  } catch (error) {
+      return Promise.reject(error)
   }
 }
