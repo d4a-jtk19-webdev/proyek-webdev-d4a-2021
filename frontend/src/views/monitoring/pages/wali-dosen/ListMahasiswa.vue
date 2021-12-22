@@ -28,6 +28,7 @@
           :custom-sort="sortAscending"
           :search="search"
           :custom-filter="searchMahasiswa"
+          :id="[isMobile ? 'virtual-scroll-table' : {}]"
         >
           <template v-slot:top>
             <v-text-field
@@ -169,6 +170,10 @@ export default {
   }
   .text-caption {
     color: #7b7b7b
+  }
+  #virtual-scroll-table {
+    max-height: 625px;
+    overflow: auto;
   }
   @media screen and (max-width: 600px) {
     div .v-data-footer__select, div .v-text-field__details{
