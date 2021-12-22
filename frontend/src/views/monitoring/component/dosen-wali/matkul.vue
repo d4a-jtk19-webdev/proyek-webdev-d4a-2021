@@ -14,69 +14,66 @@
       </v-btn>
     </div>
     <v-list>
-      <v-list-item
-        v-for="item in matkul_today"
-        :key="item.jamke"
-        class="tile"
-        :style="isMobile? 'max-height: 73px;' : 'max-height: 82px; max-width: 337px'"
+      <template
+        v-for="(item, index) in matkul_today"
       >
-        <v-list-item-title class="text-h5 text-center font-weight-black" style="max-width: 70px;">
-          {{ item.jamke }}
-        </v-list-item-title>
-        <v-divider
-          vertical
-          class="mr-1"
+        <v-list-item
+          v-for="detailMatkul in item.Jadwals"
+          :key="detailMatkul.id_jadwal"
+          class="tile"
+          :style="isMobile? 'max-height: 73px;' : 'max-height: 82px; max-width: 337px'"
         >
-        </v-divider>
-        <v-col :style="isMobile? 'color: #3A3A3A' : 'color: #3A3A3A; max-width: 170px'" class="text-lg-subtitle-1">
-          <v-list-item-subtitle :class="isMobile? 'text-left font-weight-black' : 'text-left font-weight-black text-wrap'" :style="isMobile? '' : 'max-height: 34px; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow:hidden; text-overflow: ellipsis; display: -webkit-box;'">
-            {{ item.matkul }}
-          </v-list-item-subtitle>
-          <v-list-item-subtitle class="text-left" style="font-size: 13px">
-            {{ item.dosen }}
-          </v-list-item-subtitle>
-        </v-col>
+          <v-list-item-title class="text-h5 text-center font-weight-black" style="max-width: 70px;">
+            {{ detailMatkul.ja }} - {{ detailMatkul.jb }}
+          </v-list-item-title>
+          <v-divider
+            vertical
+            class="mr-1"
+          >
+          </v-divider>
+          <v-col :style="isMobile? 'color: #3A3A3A' : 'color: #3A3A3A; max-width: 170px'" class="text-lg-subtitle-1">
+            <v-list-item-subtitle :class="isMobile? 'text-left font-weight-black' : 'text-left font-weight-black text-wrap'" :style="isMobile? '' : 'max-height: 34px; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow:hidden; text-overflow: ellipsis; display: -webkit-box;'">
+              {{matkul_name[index]}}
+            </v-list-item-subtitle>
+            <v-list-item-subtitle class="text-left" style="font-size: 13px">
+              {{ nama_dosen[index] }}
+            </v-list-item-subtitle>
+          </v-col>
 
-        <v-list-item-subtitle class="text-right jamke-font-size pt-0">
-          {{ item.jam }}
-        </v-list-item-subtitle>
-      </v-list-item>
+          <v-list-item-subtitle class="text-right jamke-font-size pt-0">
+            {{ detailMatkul.waktu_mulai }} - {{ detailMatkul.waktu_selesai }}
+          </v-list-item-subtitle>
+        </v-list-item>
+      </template>
     </v-list>
   </v-card>
 </template>
 <script>
+import JadwalMataKuliah from "../../../../datasource/network/monitoring/jadwal"
 export default {
   data () {
     return {
-      matkul_today: [
-        {
-          jamke: "1-2",
-          matkul: "Sistem Informasi (T)",
-          dosen: "Transmissia Semiawan",
-          jam: "07.00 - 07.50",
-          berlangsung: true
-        },
-        {
-          jamke: "3-4",
-          matkul: "Pengembangan Website (T)",
-          dosen: "Joe Lian Min",
-          jam: "07.50 - 08.40",
-          berlangsung: false
-        },
-        {
-          jamke: "5-10",
-          matkul: "Pengembangan Website (P)",
-          dosen: "Lukmannul Hakim",
-          jam: "07.00 - 07.50",
-          berlangsung: false
-        }
-      ]
+      matkul_today: [],
+      matkul_name: [],
+      nama_dosen: []
     }
   },
   computed: {
     isMobile () {
       return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs
     }
+  },
+  async mounted () {
+    var matkul = await JadwalMataKuliah.getJadwalMatakuliah()
+    this.matkul_today = matkul
+    console.log(this.matkul_today)
+    this.matkul_today.forEach(async (value, index) => {
+      var namaMatkul = await JadwalMataKuliah.getNamaMataKuliah(value.id_mata_kuliah)
+      this.matkul_name.push(namaMatkul)
+
+      var namaDosen = await JadwalMataKuliah.getNamaDosen(value.Jadwals[0].nip)
+      this.dosne_name.push(namaDosen)
+    })
   }
 }
 </script>
