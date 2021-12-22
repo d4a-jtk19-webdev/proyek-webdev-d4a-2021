@@ -19,7 +19,7 @@ export const getJadwalByWalDos = async (req, res, next) => {
 
 export const getJadwalPerkuliahanByDay = async (req, res, next) => {
   try {
-    const kode_hari = req.query.hari ? parseInt(req.query.hari) : Date.getDay()
+    const kode_hari = req.query.hari ? parseInt(req.query.hari) : (new Date()).getDay()
     const kode_kelas = parseInt(req.params.kode_kelas)
 
     const jadwalPerkuliahanResult = await JadwalDAO.getJadwalPerkuliahanByDay(kode_kelas, kode_hari)
