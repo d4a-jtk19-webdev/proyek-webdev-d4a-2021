@@ -24,4 +24,5 @@ router.get('/searchByNIM/:NIM', MahasiswaController.searchMahasiswaByNIM)
 router.get('/searchByClass/:Class', MahasiswaController.searchMahasiswaByClass)
 // router.get('/:kode_kelas', MahasiswaController.getMahasiswaByKelas)
 router.get('/getRekapSubtugasMahasiswaById/:NIM', MahasiswaController.getRekapSubtugasMahasiswaById)
+router.get('/getProgressSubtugasMahasiswaByNIM/:NIM', MahasiswaController.getProgressSubtugasByNIM)
 export default router

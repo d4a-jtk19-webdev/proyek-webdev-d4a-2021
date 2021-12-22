@@ -36,6 +36,6 @@ export const getKelasAjarByDosen = async (req, res) => {
         })
     }
     catch (error) {
-        res.status(error.status).json({ error })
+        res.status(error.status || 500).json({ error })
     }
 }

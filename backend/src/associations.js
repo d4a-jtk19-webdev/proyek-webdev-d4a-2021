@@ -5,6 +5,7 @@ import kelas from '@proyek3/postgres-database/models/Kelas'
 import perkuliahan from '@proyek3/postgres-database/models/Perkuliahan'
 import dosen from '@proyek3/postgres-database/models/Dosen'
 import jabatan from '@proyek3/postgres-database/models/Jabatan'
+import menjabat from '@proyek3/postgres-database/models/Menjabat'
 import jurusan from '@proyek3/postgres-database/models/Jurusan'
 import jadwal from '@proyek3/postgres-database/models/Jadwal'
 import studi from '@proyek3/postgres-database/models/Studi'
@@ -46,9 +47,9 @@ export const setAssociations = () => {
   dosen.hasMany(jurusan, {
     foreignKey: 'nip'
   })
-  jabatan.hasOne(dosen, {
-    foreignKey: 'id_jabatan'
-  })
+  // jabatan.hasOne(menjabat, {
+  //   foreignKey: 'id_jabatan'
+  // })
   programStudi.hasMany(mataKuliah, {
     foreignKey: 'kode_program_studi'
   })

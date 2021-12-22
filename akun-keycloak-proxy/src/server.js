@@ -18,7 +18,8 @@ import {
   KEYCLOAK_LOGIN_PATTERN,
   KEYCLOAK_LOGIN_URL,
   REDIS_HOSTNAME,
-  SESSION_PREFIX
+  SESSION_PREFIX,
+  FRONTEND_URL
 } from './config.js'
 
 const { omit, trim } = _
@@ -46,7 +47,7 @@ if (process.env.NODE_ENV === 'production') {
   }))
 } else {
   app.use(cors({
-    origin: 'http://frontend.localhost:5000',
+    origin: FRONTEND_URL,
     credentials: true
   }))
 
