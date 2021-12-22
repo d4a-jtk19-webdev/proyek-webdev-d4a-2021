@@ -1,7 +1,8 @@
 <template>
   <v-app :style="{background : currentTheme.background}">
     <side-bar v-if="!isMobile" :items="isUserDosen ? sideBarItemsDsn : isUserMhs ? sideBarItemsMhs : sideBarItemsWlDsn"/>
-    <nav-bar/>
+    <nav-bar v-if="!isMobile"/>
+    <mobile-nav-bar v-else :items="isUserDosen ? sideBarItemsDsn : isUserMhs ? sideBarItemsMhs : sideBarItemsWlDsn"/>
     <v-main :class="{'pl-14': isPad }">
       <v-container :class="isMobile? 'pa-5' : isPad? 'pa-10' : 'px-8 py-5'">
         <router-view/>
@@ -21,6 +22,7 @@
 import * as Keycloak from "keycloak-js"
 import SideBar from "@/views/shared/navigation/SideBar"
 import NavBar from "@/views/shared/navigation/NavBar"
+import MobileNavBar from "@/views/shared/navigation/MobileNavBar"
 import { mapGetters, mapActions } from "vuex"
 
 /*
@@ -36,7 +38,8 @@ export default {
   name: "TemplateMain",
   components: {
     SideBar,
-    NavBar
+    NavBar,
+    MobileNavBar
   },
   created () {
     const tasks = []

@@ -106,7 +106,7 @@
 <script>
 import { mapGetters } from "vuex"
 import Breadcumbs from "@/views/shared/navigation/Breadcumbs"
-import MobileTabsMataKuliah from "../../component/dosen/MobileTabsMataKuliah.vue"
+import MobileTabsMataKuliah from "../../component/dosen-wali/MobileTabsMataKuliah.vue"
 // import ListMahasiswa from "../../../../datasource/network/monitoring/listMahasiswa"
 
 export default {
