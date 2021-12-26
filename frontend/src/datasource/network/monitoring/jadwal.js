@@ -28,9 +28,9 @@ const getNamaMataKuliah = async (kodeMataKuliah) => {
 }
 const getNamaDosen = async (nip) => {
   try {
-    const monitoringUrl = `dosen/get-one/196610181995121000`
+    const monitoringUrl = `dosen/get-one/${nip}`
     const result = await instance.get(monitoringUrl)
-    return result.data.nama_dosen
+    return result.data.data.nama_dosen
   } catch (e) {
     return await errorHandler(e)
   }
