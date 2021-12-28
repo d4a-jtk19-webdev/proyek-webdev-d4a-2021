@@ -19,7 +19,7 @@
                 :style="isPad? 'max-width: 440px' : ''"
               >
                 <div>
-                  <p :class="isPad? 'text-h4 font-weight-bold' : 'text-h3 font-weight-bold'">Hallo, Sri Ratna Wulan</p>
+                  <p :class="isPad? 'text-h4 font-weight-bold' : 'text-h3 font-weight-bold'">Hallo, {{ this.getValueSubProgress("181524009") }}</p>
                   <p class="text-subtitle-1 mb-0 mt-5">Data di bawah ini merupakan data mahasiswa</p>
                   <p class="text-subtitle-1 ma-0"><b>Kelas D4-3A</b> Tahun Ajaran 2019</p>
                 </div>
@@ -57,11 +57,11 @@
                 <v-row
                   class="py-6"
                   style="margin:0; gap:1.375rem"
-                  :justify="end">
+                  justify="end">
                   <v-avatar
                     size="48">
                     <v-img
-                      :src="item.foto"
+                      :src="item.url_foto"
                       position="start"
                     />
                   </v-avatar>
@@ -83,7 +83,7 @@
                   </v-col>
                 </v-row>
               </template>
-              <template v-slot:[`item.graph_info`]>
+              <template v-slot:[`item.graph_info`]="{ item }">
                 <v-col
                 style="margin:0; padding:0"
                 class="stackSheet"
@@ -95,7 +95,7 @@
                     :line-width="dataGraph.width"
                     :padding="dataGraph.padding"
                     :smooth="dataGraph.radius || false"
-                    :value="dataGraph.value1"
+                    :value="getValueSubProgress(item.nim)"
                     auto-draw
                   ></v-sparkline>
                   <v-sparkline
@@ -104,26 +104,26 @@
                     :line-width="dataGraph.width"
                     :padding="dataGraph.padding"
                     :smooth="dataGraph.radius || false"
-                    :value="dataGraph.value2"
+                    :value="dataGraph.value1"
                     auto-draw
                     class="stackSpark"
                   ></v-sparkline>
                 </v-col>
               </template>
-              <template v-slot:[`item.tugasPersen`]="{ item }">
-                <div v-if="item.tugas.indexOf('+') !== -1">
-                  <span style="color: #0FB551;">{{ item.tugas }}</span>
+              <template v-slot:[`item.tugasPersen`]>
+                <div v-if="isPositive(getPercentTugas(dataGraph.value1))">
+                  <span style="color: #0FB551;">+{{ getPercentTugas(dataGraph.value1) }}</span>
                 </div>
                 <div v-else>
-                  <span style="color: #C42300;">{{ item.tugas }}</span>
+                  <span style="color: #C42300;">{{ getPercentTugas(dataGraph.value1) }}</span>
                 </div>
               </template>
-              <template v-slot:[`item.pahamPersen`]="{ item }">
-                <div v-if="item.pemahaman.indexOf('+') !== -1">
-                  <span style="color: #39AEE0;">{{ item.pemahaman }}</span>
+              <template v-slot:[`item.pahamPersen`]>
+                <div v-if="isPositive(getPercentTugas(dataGraph.value1))">
+                  <span style="color: #0FB551;">+{{ getPercentTugas(dataGraph.value1) }}</span>
                 </div>
                 <div v-else>
-                  <span style="color: #FF922E;">{{ item.pemahaman }}</span>
+                  <span style="color: #C42300;">{{ getPercentTugas(dataGraph.value1) }}</span>
                 </div>
               </template>
             </v-data-table>
@@ -147,9 +147,9 @@
 <script>
 import { mapGetters } from "vuex"
 import Breadcumbs from "@/views/shared/navigation/Breadcumbs"
-import ListMahasiswa from "../../../../datasource/network/monitoring/TABELDASHBOARD"
+import ListMahasiswa from "../../../../datasource/network/monitoring/listMahasiswa"
 import Matkul from "@/views/monitoring/component/dosen-wali/matkul"
-// import Graph from "@/views/monitoring/component/dosen-wali/graph"
+import getProgressSubtugasByNIM from "../../../../datasource/network/monitoring/tabeldashboard"
 
 const gradients = [
   ["#0FB551"],
@@ -163,6 +163,11 @@ export default {
   components: { Breadcumbs, Matkul },
   data () {
     return {
+      user: {
+        nama: "User",
+        no_induk: "000",
+        image: "#"
+      },
       search: "",
       breadcrumbItems: [
         {
@@ -198,8 +203,8 @@ export default {
         gradients,
         padding: 0,
         radius: 0,
-        value1: [1, 4, 6, 3, 4, 8],
-        value2: [9, 7, 6, 3, 4, 5],
+        value1: [],
+        value2: [],
         width: 10
       }
     }
@@ -217,14 +222,13 @@ export default {
     },
     identity: function () {
       return this.$store.getters.identity
-    },
-    isPositive () {
-      return true
     }
   },
   async mounted () {
     var mahasiswa = await ListMahasiswa.getMahasiswa()
     this.listMahasiswa = mahasiswa
+    this.user.nama = this.identity.given_name
+    console.log(this.identity.given_name)
   },
   methods: {
     sortAscending (items) {
@@ -240,6 +244,30 @@ export default {
     searchMahasiswa (value, search, item) {
       return (item.nim != null || item.nama != null) &&
         (item.nim.indexOf(search) !== -1 || item.nama.toLowerCase().indexOf(search.toLowerCase()) !== -1)
+    },
+    async getSubTugasProgress (NIM) {
+      return await getProgressSubtugasByNIM(NIM, "2021-07-01", "2021-08-30")
+    },
+    getValueSubProgress (NIM) {
+      this.getSubTugasProgress(NIM).then(data => {
+        this.dataGraph.value1 = data
+      })
+      return this.dataGraph.value1
+    },
+    getPercentTugas (dataTugas) {
+      if (dataTugas.length <= 1) {
+        return 0
+      } else {
+        const progress = dataTugas[dataTugas.length - 1] - dataTugas[dataTugas.length - 2]
+        return progress
+      }
+    },
+    isPositive (number) {
+      if (number * -1 < 0) {
+        return false
+      } else {
+        return true
+      }
     }
   }
 }

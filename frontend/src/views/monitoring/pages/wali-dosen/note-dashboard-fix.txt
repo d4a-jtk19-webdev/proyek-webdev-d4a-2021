@@ -1,0 +1,16 @@
+//////////////////////
+//      NOTE        //
+//////////////////////
+
+1. Fungsi API di dashboard
+    - Proses integrasi API dari backend : frontend/src/datasource/network/monitoring/tabeldashboard.js
+    - getSubTugasProgress (Line 248)    : Buat ngambil data dari API
+    - getValueSubProgress (Line 251)    : Biar bisa mengakses data yang udah dikirim API
+    - Dipanggil pada Line 98
+2. Untuk mendapat errornya
+    - Run proyek seperti biasa (semuanya dijalankan)
+    - Lalu login melalui http://akun.localhost:5000/login
+    - Setelah login masuk ke dashboard melalui http://frontend.localhost:5000/monitoring/wali-dosen/dashboard
+    - Lalu tekan F12 untuk membuka DevTools untuk melihat error pada console
+
+* Jika error sudah diperbaiki mohon hapus file ini!
