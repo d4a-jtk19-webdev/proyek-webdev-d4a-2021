@@ -19,7 +19,7 @@
                 :style="isPad? 'max-width: 440px' : ''"
               >
                 <div>
-                  <p :class="isPad? 'text-h4 font-weight-bold' : 'text-h3 font-weight-bold'">Hallo, {{ this.getValueSubProgress("181524009") }}</p>
+                  <p :class="isPad? 'text-h4 font-weight-bold' : 'text-h3 font-weight-bold'">Hallo</p>
                   <p class="text-subtitle-1 mb-0 mt-5">Data di bawah ini merupakan data mahasiswa</p>
                   <p class="text-subtitle-1 ma-0"><b>Kelas D4-3A</b> Tahun Ajaran 2019</p>
                 </div>
@@ -83,7 +83,7 @@
                   </v-col>
                 </v-row>
               </template>
-              <template v-slot:[`item.graph_info`]="{ item }">
+              <template v-slot:[`item.graph_info`]="{item}">
                 <v-col
                 style="margin:0; padding:0"
                 class="stackSheet"
@@ -95,7 +95,7 @@
                     :line-width="dataGraph.width"
                     :padding="dataGraph.padding"
                     :smooth="dataGraph.radius || false"
-                    :value="getValueSubProgress(item.nim)"
+                    :value="item.graphTugas"
                     auto-draw
                   ></v-sparkline>
                   <v-sparkline
@@ -147,9 +147,8 @@
 <script>
 import { mapGetters } from "vuex"
 import Breadcumbs from "@/views/shared/navigation/Breadcumbs"
-import ListMahasiswa from "../../../../datasource/network/monitoring/listMahasiswa"
 import Matkul from "@/views/monitoring/component/dosen-wali/matkul"
-import getProgressSubtugasByNIM from "../../../../datasource/network/monitoring/tabeldashboard"
+import TabelDashboard from "../../../../datasource/network/monitoring/tabeldashboard"
 
 const gradients = [
   ["#0FB551"],
@@ -225,10 +224,19 @@ export default {
     }
   },
   async mounted () {
-    var mahasiswa = await ListMahasiswa.getMahasiswa()
-    this.listMahasiswa = mahasiswa
-    this.user.nama = this.identity.given_name
-    console.log(this.identity.given_name)
+    TabelDashboard.getMahasiswa().then((result) => {
+      const panjang = result.length
+      var promises = []
+      for (var i = 0; i < panjang; i++) {
+        promises.push(TabelDashboard.getProgressSubtugasByNIM(result.nim, "2021-07-01", "2021-08-30"))
+      }
+      Promise.all(promises).then((res) => {
+        res.forEach((value, index) => {
+          result[index].graphTugas = value
+        })
+        this.listMahasiswa = result
+      })
+    })
   },
   methods: {
     sortAscending (items) {
@@ -245,15 +253,9 @@ export default {
       return (item.nim != null || item.nama != null) &&
         (item.nim.indexOf(search) !== -1 || item.nama.toLowerCase().indexOf(search.toLowerCase()) !== -1)
     },
-    async getSubTugasProgress (NIM) {
-      return await getProgressSubtugasByNIM(NIM, "2021-07-01", "2021-08-30")
-    },
-    getValueSubProgress (NIM) {
-      this.getSubTugasProgress(NIM).then(data => {
-        this.dataGraph.value1 = data
-      })
-      return this.dataGraph.value1
-    },
+    // async getSubTugasProgress (NIM) {
+    //   return await getProgressSubtugasByNIM(NIM, "2021-07-01", "2021-08-30")
+    // },
     getPercentTugas (dataTugas) {
       if (dataTugas.length <= 1) {
         return 0
