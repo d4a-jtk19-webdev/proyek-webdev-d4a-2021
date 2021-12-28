@@ -19,7 +19,7 @@
                 :style="isPad? 'max-width: 440px' : ''"
               >
                 <div>
-                  <p :class="isPad? 'text-h4 font-weight-bold' : 'text-h3 font-weight-bold'">Hallo</p>
+                  <p :class="isPad? 'text-h4 font-weight-bold' : 'text-h3 font-weight-bold'">Hallo, {{ user.nama }}</p>
                   <p class="text-subtitle-1 mb-0 mt-5">Data di bawah ini merupakan data mahasiswa</p>
                   <p class="text-subtitle-1 ma-0"><b>Kelas D4-3A</b> Tahun Ajaran 2019</p>
                 </div>
@@ -110,12 +110,12 @@
                   ></v-sparkline>
                 </v-col>
               </template>
-              <template v-slot:[`item.tugasPersen`]>
+              <template v-slot:[`item.tugasPersen`]="{ item }">
                 <div v-if="isPositive(getPercentTugas(dataGraph.value1))">
-                  <span style="color: #0FB551;">+{{ getPercentTugas(dataGraph.value1) }}</span>
+                  <span style="color: #0FB551;">+{{ getPercentTugas(item.graphTugas) }}</span>
                 </div>
                 <div v-else>
-                  <span style="color: #C42300;">{{ getPercentTugas(dataGraph.value1) }}</span>
+                  <span style="color: #C42300;">{{ getPercentTugas(item.graphTugas) }}</span>
                 </div>
               </template>
               <template v-slot:[`item.pahamPersen`]>
@@ -237,6 +237,8 @@ export default {
         this.listMahasiswa = result
       })
     })
+    this.user.nama = this.identity.given_name
+    console.log("User logged: " + this.user.nama)
   },
   methods: {
     sortAscending (items) {
@@ -253,9 +255,6 @@ export default {
       return (item.nim != null || item.nama != null) &&
         (item.nim.indexOf(search) !== -1 || item.nama.toLowerCase().indexOf(search.toLowerCase()) !== -1)
     },
-    // async getSubTugasProgress (NIM) {
-    //   return await getProgressSubtugasByNIM(NIM, "2021-07-01", "2021-08-30")
-    // },
     getPercentTugas (dataTugas) {
       if (dataTugas.length <= 1) {
         return 0
