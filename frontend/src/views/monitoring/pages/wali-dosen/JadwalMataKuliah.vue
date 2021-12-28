@@ -29,14 +29,14 @@
       <v-col cols="12" class="py-5">
         <v-tabs-items v-model="tab" class="overflow-visible">
           <v-tab-item
-            v-for="item in items"
-            :key="item"
+            v-for="(hari, index) in jadwals"
+            :key="index"
           >
-            <v-sheet>
-              <v-card class="pa-5 d-flex flex-no-wrap">
-                <v-sheet rounded="lg" class="green lighten-4 pa-3 col-md-2 col-sm-3">
+            <v-sheet v-for="(matkul, index) in hari" :key="index">
+              <v-card class="pa-5 d-flex flex-no-wrap mb-3" v-for="(item, index) in matkul.Jadwals" :key="index">
+                <v-sheet rounded="lg" :class="item.jenis === 'PR' ? 'orange lighten-4 green lighten-4': 'green lighten-4'" class="pa-3 col-md-2 col-sm-3">
                     <div class="rounded-lg px-md-6 px-sm-3 py-sm-1 py-md-7 text-h4 text-center white font-weight-bold">
-                      1 - 2
+                      {{item.ja}} - {{item.jb}}
                     </div>
                 </v-sheet>
                 <v-sheet class="col-md-10 col-sm-9 pl-5 pa-0">
@@ -44,20 +44,20 @@
                     <v-col class="pa-0 col-7">
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
-                          <div v-bind="attrs" v-on="on" class="text-truncate font-weight-bold mb-1" style="cursor:default" :style="[isMobile ? {'font-size':'1.125rem'} : isPad ? {'font-size':'1.5rem'} : {'font-size':'1.875rem'}]">Manajemen Proyek Rekayasa Perangkat Lunak</div>
+                          <div v-bind="attrs" v-on="on" class="text-truncate font-weight-bold mb-1" style="cursor:default" :style="[isMobile ? {'font-size':'1.125rem'} : isPad ? {'font-size':'1.5rem'} : {'font-size':'1.875rem'}]">{{ matkul.nama_mata_kuliah }}</div>
                         </template>
-                        <span>Manajemen Proyek Rekayasa Perangkat Lunak</span>
+                        <span>{{ matkul.nama_mata_kuliah }}</span>
                       </v-tooltip>
                       <v-sheet class="d-flex flex-no-wrap align-center" style="gap:1rem">
-                        <v-card-subtitle :style="[isMobile ? {'font-size':'0.75rem'} : isPad ? {'font-size':'0.875rem'} : {'font-size':'1.125rem'}]" style="padding:0">16TIN5063</v-card-subtitle>
-                        <v-card-subtitle class="font-weight-bold" :style="[isMobile ? {'font-size':'0.75rem'} : isPad ? {'font-size':'1rem'} : {'font-size':'1.125rem'}]" style="color:#232323; padding:0">3 SKS</v-card-subtitle>
+                        <v-card-subtitle :style="[isMobile ? {'font-size':'0.75rem'} : isPad ? {'font-size':'0.875rem'} : {'font-size':'1.125rem'}]" style="padding:0">{{matkul.id_mata_kuliah}}</v-card-subtitle>
+                        <v-card-subtitle class="font-weight-bold" :style="[isMobile ? {'font-size':'0.75rem'} : isPad ? {'font-size':'1rem'} : {'font-size':'1.125rem'}]" style="color:#232323; padding:0">{{item.jenis === "PR" ? matkul.sks_praktek: matkul.sks_teori}} SKS</v-card-subtitle>
                       </v-sheet>
                     </v-col>
                     <v-col class="pa-0 ">
                       <v-sheet class="d-flex justify-space-between flex-column align-end">
                         <v-sheet class="rounded-lg grey lighten-2 px-3 py-1">
-                          <span class="font-weight-bold" :style="isPad?{'font-size':'1rem'}:{'font-size':'1.5rem'}">07.00 </span>
-                          <span :style="isPad?{'font-size':'1rem'}:{'font-size':'1.5rem'}">- 08.40 (WIB)</span>
+                          <span class="font-weight-bold" :style="isPad?{'font-size':'1rem'}:{'font-size':'1.5rem'}">{{item.waktu_mulai.split(":")[0]+":"+item.waktu_mulai.split(":")[1]}} </span>
+                          <span :style="isPad?{'font-size':'1rem'}:{'font-size':'1.5rem'}">- {{item.waktu_selesai.split(":")[0]+":"+item.waktu_selesai.split(":")[1]}} (WIB)</span>
                         </v-sheet>
                       </v-sheet>
                     </v-col>
@@ -67,13 +67,10 @@
                       <div class="d-flex flex-row-nowrap justify-space-between">
                         <v-sheet class="d-flex flex-wrap justify-start align-center" style="gap:1rem">
                           <div class="rounded-pill green grey lighten-2 px-4 py-2 text-truncate" :style="[isMobile ? {'font-size':'0.75rem'} : isPad ? {'font-size':'0.75rem'} : {'font-size':'1rem'}]">
-                            Didik Suwito
-                          </div>
-                          <div class="rounded-pill green grey lighten-2 px-4 py-2 text-truncate" :style="[isMobile ? {'font-size':'0.75rem'} : isPad ? {'font-size':'0.75rem'} : {'font-size':'1rem'}]">
-                            Transmissia Semiawan
+                            {{item.nama_dosen}}
                           </div>
                         </v-sheet>
-                        <div class="d-flex align-center rounded-lg green lighten-4 px-4 text-center" style="font-weight:600" :style="[isMobile ? {'font-size':'1.125rem'} : isPad ? {'font-size':'1.125rem'} : {'font-size':'1.25rem'}]">Teori</div>
+                        <div class="d-flex align-center rounded-lg px-4 text-center" :class="item.jenis === 'PR' ? 'orange lighten-4': 'green lighten-4'" style="font-weight:600" :style="[isMobile ? {'font-size':'1.125rem'} : isPad ? {'font-size':'1.125rem'} : {'font-size':'1.25rem'}]">{{item.jenis === "PR" ? "Praktek": "Teori"}}</div>
                       </div>
                   </div>
                 </v-sheet>
@@ -94,9 +91,7 @@
             <span class="text-body-2 font-weight-bold">Kelas D4 - 3A Semester 5</span>
             <span class="text-body-2 font-weight-regular"> Tahun ajaran 2021/2022</span>
           </p>
-          <mobile-tabs-mata-kuliah
-            :days="days"
-          />
+          <mobile-tabs-mata-kuliah />
         </v-card>
       </v-col>
     </v-row>
@@ -106,8 +101,8 @@
 <script>
 import { mapGetters } from "vuex"
 import Breadcumbs from "@/views/shared/navigation/Breadcumbs"
-import MobileTabsMataKuliah from "../../component/dosen/MobileTabsMataKuliah.vue"
-// import ListMahasiswa from "../../../../datasource/network/monitoring/listMahasiswa"
+import MobileTabsMataKuliah from "../../component/dosen-wali/MobileTabsMataKuliah.vue"
+import JadwalMataKuliah from "../../../../datasource/network/monitoring/jadwalMataKuliahWaliDosen"
 
 export default {
   name: "JadwalMataKuliah",
@@ -127,9 +122,37 @@ export default {
         }
       ],
       tab: 0,
-      items: [0, 1, 2, 3, 4],
-      days: ["SENIN", "SELASA", "RABU", "KAMIS", "JUMAT"]
+      days: ["SENIN", "SELASA", "RABU", "KAMIS", "JUMAT"],
+      jadwals: [],
+      namaMatKul: []
     }
+  },
+  mounted () {
+    this.days.forEach((hari, hariIndex) => {
+      JadwalMataKuliah.getJadwalMataKuliah(hariIndex + 1).then((result) => {
+        var temp = []
+        result.forEach((matkul, matkulIndex) => {
+          temp.push(JadwalMataKuliah.getNamaMataKuliah(matkul.id_mata_kuliah))
+        })
+        Promise.all(temp).then((res) => {
+          res.forEach((infoMatkul, infoMatkulIndex) => {
+            result[infoMatkulIndex].nama_mata_kuliah = res[infoMatkulIndex].nama_mata_kuliah
+            result[infoMatkulIndex].sks_teori = res[infoMatkulIndex].sks_teori
+            result[infoMatkulIndex].sks_praktek = res[infoMatkulIndex].sks_praktek
+            result[infoMatkulIndex].Jadwals.forEach((jadwal, jadwalIndex) => {
+              var temp2 = []
+              temp2.push(JadwalMataKuliah.getNamaDosen(jadwal.nip))
+              Promise.all(temp2).then((dosenRes) => {
+                dosenRes.forEach((dosen) => {
+                  jadwal.nama_dosen = dosen.nama_dosen
+                })
+              })
+            })
+          })
+          this.jadwals.push(result)
+        })
+      })
+    })
   },
   computed: {
     ...mapGetters({
