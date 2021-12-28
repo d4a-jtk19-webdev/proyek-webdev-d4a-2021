@@ -223,6 +223,18 @@ export default {
       return this.$store.getters.identity
     }
   },
+  created () {
+    // this.user.nama = this.identity.given_name
+    const tasks = []
+    if (this.$route.meta.requiresAuth) {
+      tasks.push(this.waitAuthenticated())
+    }
+    Promise.all(tasks).then(result => {
+      this.isLoading = false
+      this.user.nama = this.identity.given_name
+      console.log("User logged: " + this.user.nama)
+    })
+  },
   async mounted () {
     TabelDashboard.getMahasiswa().then((result) => {
       const panjang = result.length
@@ -237,8 +249,6 @@ export default {
         this.listMahasiswa = result
       })
     })
-    this.user.nama = this.identity.given_name
-    console.log("User logged: " + this.user.nama)
   },
   methods: {
     sortAscending (items) {
@@ -269,6 +279,24 @@ export default {
       } else {
         return true
       }
+    },
+    async waitAuthenticated () {
+      return new Promise((resolve) => {
+        const unwatch = this.$store.watch(state => {
+          return this.$store.getters.identity
+        }, value => {
+          if (!value) {
+            return
+          }
+          // if (!value.isActive) {
+          //   this.$router.replace({ path: "/reset-password" })
+          // }
+          unwatch()
+          resolve()
+        }, {
+          immediate: true
+        })
+      })
     }
   }
 }
