@@ -140,7 +140,6 @@ export default {
           console.error(err)
         }
       }, 6000)
-
       this.$router.replace({ path: "/" })
 
       return

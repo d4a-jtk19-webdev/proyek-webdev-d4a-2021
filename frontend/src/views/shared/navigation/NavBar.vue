@@ -5,11 +5,11 @@
       clipped-left
       fixed
       max-height="75"
-      v-if="!$vuetify.breakpoint.mobile"
+      v-if="!isMobile()"
     >
-      <v-card @click="onClickedHome()" outlined color="transparent" height="50" width="320" class="pt-3">
+      <v-card @click="onClickedHome()" outlined color="transparent" height="50" width="320" class="d-flex align-center">
         <v-row align="center">
-          <v-img :src="require('../../../assets/polban.png')" max-width="45" contain class="mx-4"/>
+          <v-img :src="require('../../../assets/logopolban.png')" max-width="25" contain class="mx-3"/>
           <v-col class="pa-0">
             <v-toolbar-title :style="{ color: currentTheme.colorPrimary }">Politeknik Negeri Bandung</v-toolbar-title>
           </v-col>
@@ -27,16 +27,50 @@
         dense
         @click:append="notification_click"
       ></v-text-field> -->
-      <!-- <v-btn class="ml-2" icon @click="notification_click()">
-        <v-badge
-          :content="usernotif"
-          :value="usernotif"
-          color="red"
-          overlap
-        >
-          <v-icon :style="{color: currentTheme.colorPrimary}">mdi-bell-outline</v-icon>
-        </v-badge>
-      </v-btn> -->
+      <v-menu offset-y>
+          <template v-slot:activator="{ on }">
+            <v-btn class="ml-2" dark icon v-on="on" @click="notification_click()">
+              <v-badge
+                :content="usernotif"
+                :value="usernotif"
+                color="red"
+                overlap
+              >
+              <v-icon :style="{color: currentTheme.colorPrimary}">mdi-bell-outline</v-icon>
+              </v-badge>
+            </v-btn>
+          </template>
+          <v-card class="mx-auto" max-width="300" tile>
+            <v-list flat>
+              <v-subheader>
+                Notification
+                <v-btn
+                  class="ml-4"
+                  color="currentTheme.colorPrimary"
+                  @click="usernotif = 0"
+                >
+                  Clear
+                </v-btn>
+              </v-subheader>
+              <v-list-item-group
+                v-model="selectedItem"
+                color="primary"
+              >
+                <v-list-item
+                  v-for="(item, i) in items"
+                  :key="i"
+                >
+                  <v-list-item-icon>
+                    <v-icon v-text="item.icon"></v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title v-text="item.text"></v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+          </v-card>
+      </v-menu>
       <v-btn depressed :style="{background : currentTheme}" right class="ml-1" height="50px">
         <div :style="{background: currentTheme.colorPrimary, 'border-radius': '100%', padding: '2px'}">
           <v-avatar size="27">
@@ -96,8 +130,7 @@
             dense
             @click:append="search()"
           ></v-text-field> -->
-          <v-list
-          >
+          <v-list>
             <v-list-item class="profile mx-3" two-line>
               <v-list-item-avatar  @click="profil_click()">
                 <v-avatar>
@@ -157,8 +190,7 @@
 import { mapGetters, mapActions } from "vuex"
 export default {
   name: "NavBar",
-  components: {
-  },
+  components: { },
   data () {
     return {
       user: {
@@ -171,7 +203,12 @@ export default {
       group: null,
       darkmode: false,
       toHome: "/home",
-      isLoading: true
+      isLoading: true,
+      selectedItem: 1,
+      items: [
+        { text: "Click Me", icon: "mdi-clock" },
+        { text: "Click Me", icon: "mdi-clock" }
+      ]
     }
   },
   computed: {
@@ -205,6 +242,12 @@ export default {
     },
     search () {
       console.log("Search clicked")
+    },
+    isMobile () {
+      return this.$vuetify.breakpoint.xs
+    },
+    isPad () {
+      return this.$vuetify.breakpoint.ms
     },
     async onClickedHome () {
       if (this.$router.currentRoute.path !== this.toHome) {

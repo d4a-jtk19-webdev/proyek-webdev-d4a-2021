@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer clipped app permanent id="sidebar"  @transitionend="collapseSubItems">
+  <v-navigation-drawer clipped app permanent id="sidebar"  @transitionend="collapseSubItems" :style="{width : isPad?'3.5rem':'16rem'}">
     <v-list>
       <div
         v-for="(item, i) in navItem"
@@ -27,11 +27,11 @@
           dark
         >
           <v-list-item-icon v-if="item.icon">
-            <v-icon color="white">{{ item.icon }}</v-icon>
+            <v-icon color="#DDE2FF">{{ item.icon }}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title v-text="item.text" style="color:white"></v-list-item-title>
+            <v-list-item-title v-text="item.text" style="color:#DDE2FF" class="d-none d-sm-none d-md-flex"></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
@@ -88,8 +88,14 @@
         text
         block id="logout-button"
         class="font-weight-bold text-uppercase text-button text-left"
-        @click="logout()">
-        Log out
+        @click="logout()"
+        :class="{'pl-4': isPad, 'align-center':isPad}"
+        style="color:#797979"
+      >
+        <v-icon medium color="#797979" :class="{'mr-4':!isPad}" style="transform:rotate(180deg)">
+          mdi-logout
+        </v-icon>
+        {{isPad? '' : 'Log out'}}
       </v-btn>
     </template>
   </v-navigation-drawer>
@@ -175,6 +181,9 @@ export default {
         }
         return item
       })
+    },
+    isPad () {
+      return this.$vuetify.breakpoint.sm
     }
   },
   methods: {

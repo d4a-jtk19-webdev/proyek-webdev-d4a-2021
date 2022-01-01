@@ -1,9 +1,10 @@
 <template>
   <v-app :style="{background : currentTheme.background}">
-    <side-bar v-if="!isMobile" :items="isUserDosen ? sideBarItemsDsn : sideBarItemsMhs"/>
-    <nav-bar/>
-    <v-main>
-      <v-container :class="isMobile? 'pa-5' : 'pa-12'">
+    <side-bar v-if="!isMobile" :items="isUserWlDsn ? sideBarItemsWlDsn : isUserDosen ? sideBarItemsDsn : sideBarItemsMhs"/>
+    <nav-bar v-if="!isMobile"/>
+    <mobile-nav-bar v-else :items="isUserDosen ? sideBarItemsDsn : isUserMhs ? sideBarItemsMhs : sideBarItemsWlDsn"/>
+    <v-main :class="{'pl-14': isPad }">
+      <v-container :class="isMobile? 'pa-5' : isPad? 'pa-10' : 'px-8 py-5'">
         <router-view/>
       </v-container>
       <v-overlay :value="isLoading">
@@ -21,6 +22,7 @@
 import * as Keycloak from "keycloak-js"
 import SideBar from "@/views/shared/navigation/SideBar"
 import NavBar from "@/views/shared/navigation/NavBar"
+import MobileNavBar from "@/views/shared/navigation/MobileNavBar"
 import { mapGetters, mapActions } from "vuex"
 
 /*
@@ -30,13 +32,14 @@ import { mapGetters, mapActions } from "vuex"
  */
 const TOKEN_ACCESS_INTERVAL = (1000 * 60 * 60 * 5) - (1000 * 6)
 const initOptions = {
-  url: "https://keycloak.ca9db134.nip.io/auth", realm: "polban-realm", clientId: "template", onLoad: "login-required"
+  url: "https://keycloak.ca9db134.nip.io/auth", realm: "polban-realm", clientId: "template", onLoad: "login-required", checkLoginIframe: false
 }
 export default {
   name: "TemplateMain",
   components: {
     SideBar,
-    NavBar
+    NavBar,
+    MobileNavBar
   },
   created () {
     const tasks = []
@@ -60,7 +63,14 @@ export default {
         { text: "Dashboard Mahasiswa", icon: "mdi-school-outline", to: "/monitoring/mahasiswa/dashboard" },
         { text: "Monitoring Tugas Mahasiswa", icon: "mdi-monitor-multiple", to: "/monitoring/mahasiswa/matakuliah" }
       ],
-      isUserDosen: false
+      sideBarItemsWlDsn: [
+        { text: "Dashboard", icon: "mdi-view-dashboard", to: "/monitoring/wali-dosen/dashboard" },
+        { text: "List Mahasiswa", icon: "mdi-account-group", to: "/monitoring/wali-dosen/list-mahasiswa" },
+        { text: "Jadwal Mata Kuliah", icon: "mdi-format-list-bulleted", to: "/monitoring/wali-dosen/jadwal-mata-kuliah" }
+      ],
+      isUserWlDsn: false,
+      isUserDosen: false,
+      isUserMhs: false
     }
   },
   computed: {
@@ -74,7 +84,10 @@ export default {
       return "anda belum login , aya coba login"
     },
     isMobile () {
-      return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs
+      return this.$vuetify.breakpoint.xs
+    },
+    isPad () {
+      return this.$vuetify.breakpoint.sm
     },
     identity: function () {
       return this.$store.getters.identity
@@ -139,8 +152,12 @@ export default {
     cekUserRoles () {
       var roles = this.identity.realm_access.roles
       for (var i in roles) {
-        if (roles[i] === "dosen") {
+        if (roles[i] === "dosen wali") {
+          this.isUserWlDsn = true
+        } else if (roles[i] === "dosen") {
           this.isUserDosen = true
+        } else if (roles[i] === "mahasiswa") {
+          this.isUserMhs = true
         }
       }
       console.log("roles " + this.isUserDosen)
