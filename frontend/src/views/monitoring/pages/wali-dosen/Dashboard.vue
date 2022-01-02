@@ -223,24 +223,12 @@ export default {
       return this.$store.getters.identity
     }
   },
-  created () {
-    // this.user.nama = this.identity.given_name
-    const tasks = []
-    if (this.$route.meta.requiresAuth) {
-      tasks.push(this.waitAuthenticated())
-    }
-    Promise.all(tasks).then(result => {
-      this.isLoading = false
-      this.user.nama = this.identity.given_name
-      console.log("User logged: " + this.user.nama)
-    })
-  },
   async mounted () {
     TabelDashboard.getMahasiswa().then((result) => {
       const panjang = result.length
       var promises = []
       for (var i = 0; i < panjang; i++) {
-        promises.push(TabelDashboard.getProgressSubtugasByNIM(result.nim, "2021-07-01", "2021-08-30"))
+        promises.push(TabelDashboard.getProgressSubtugasByNIM(result[i].nim, "2021-07-01", "2021-08-30"))
       }
       Promise.all(promises).then((res) => {
         res.forEach((value, index) => {
@@ -248,6 +236,15 @@ export default {
         })
         this.listMahasiswa = result
       })
+    })
+    var tasks = []
+    if (this.$route.meta.requiresAuth) {
+      tasks.push(this.waitAuthenticated())
+    }
+    Promise.all(tasks).then(result => {
+      this.isLoading = false
+      this.user.nama = this.identity.given_name
+      console.log("User logged: " + this.user.nama)
     })
   },
   methods: {
@@ -282,7 +279,7 @@ export default {
     },
     async waitAuthenticated () {
       return new Promise((resolve) => {
-        const unwatch = this.$store.watch(state => {
+        this.$store.watch(state => {
           return this.$store.getters.identity
         }, value => {
           if (!value) {
@@ -291,7 +288,7 @@ export default {
           // if (!value.isActive) {
           //   this.$router.replace({ path: "/reset-password" })
           // }
-          unwatch()
+          // unwatch()
           resolve()
         }, {
           immediate: true

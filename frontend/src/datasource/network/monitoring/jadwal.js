@@ -3,7 +3,7 @@ import errorHandler
   from "@/datasource/network/errorHandler"
 
 const NETWORK_TIMEOUT = 10000
-const AUTH_URL = "http://localhost:14418/"
+const AUTH_URL = process.env.VUE_APP_AKUN_API_URL
 const instance = axios.create({
   baseURL: AUTH_URL,
   timeout: NETWORK_TIMEOUT
