@@ -9,6 +9,7 @@ import jurusan from './models/Jurusan'
 import tugas from './models/Tugas'
 import subtugas from './models/Subtugas'
 import studi from './models/Studi'
+import pengajar from './models/Pengajar'
 
 const setAssociations = () => {
   programStudi.hasMany(mataKuliah, {
@@ -33,10 +34,14 @@ const setAssociations = () => {
     foreignKey: 'id_mahasiswa'
   })
   dosen.belongsToMany(perkuliahan, {
-    through: 'Pengajar'
+    through: pengajar,
+    foreignKey: 'nip',
+    otherKey: 'id_perkuliahan'
   })
   perkuliahan.belongsToMany(dosen, {
-    through: 'Pengajar'
+    through: pengajar,
+    foreignKey: 'id_perkuliahan',
+    otherKey: 'nip'
   })
   dosen.hasMany(kelas, {
     foreignKey: 'nip'
