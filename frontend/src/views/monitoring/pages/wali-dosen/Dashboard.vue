@@ -34,7 +34,7 @@
       <v-col width="100%">
         <v-row>
           <!-- Table Section -->
-          <v-col :cols="isPad? '12' : '8'" :style="isPad? 'max-width: 100%;' : 'max-width: 674px;'">
+          <v-col :cols="isPad? '12' : '8'" :style="isPad? 'max-width: 100%;' : 'max-width: 765px;'">
             <v-data-table
               :headers="headers"
               :items="listMahasiswa"
