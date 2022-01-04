@@ -213,3 +213,33 @@ export const getProgressSubtugasByNIM = async (req, res, next) => {
     next(error)
   }
 }
+
+export const getSkalaPemahamanSubtugasByNIM = async (req, res, next) => {
+  try {
+    const { NIM } = req.params;
+    const startDuration = new Date(req.query.start);
+    const endDuration = new Date(req.query.end);
+    var pemahamanSubtugas = [];
+
+    var incrementDate = new Date(req.query.start)
+    incrementDate.setDate(incrementDate.getDate() + 7);
+    while (incrementDate.getTime() < endDuration.getTime()) {
+      const skalapemahaman = await MahasiswaDAO.getSkalaPemahamanByNIM(NIM, startDuration, incrementDate);
+      
+      var pemahaman = skalapemahaman[0] == undefined ? 0 : skalapemahaman[0].skala;
+      pemahamanSubtugas.push(pemahaman);
+
+      // add date to next week
+      incrementDate.setDate(incrementDate.getDate() + 7);
+    }
+    
+    res.status(200).json({
+      message: 'get pemahaman subtugas Mahasiswa by Id success',
+      data: {
+        pemahamanSubtugas
+      }
+    })
+  } catch (error) {
+    next(error)
+  }
+}
