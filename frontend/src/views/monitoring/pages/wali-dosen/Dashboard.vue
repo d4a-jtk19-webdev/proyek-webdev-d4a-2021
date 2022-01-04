@@ -104,26 +104,26 @@
                     :line-width="dataGraph.width"
                     :padding="dataGraph.padding"
                     :smooth="dataGraph.radius || false"
-                    :value="dataGraph.value1"
+                    :value="item.graphPemahaman"
                     auto-draw
                     class="stackSpark"
                   ></v-sparkline>
                 </v-col>
               </template>
               <template v-slot:[`item.tugasPersen`]="{ item }">
-                <div v-if="isPositive(getPercentTugas(dataGraph.value1))">
+                <div v-if="isPositive(getPercentTugas(item.graphTugas))">
                   <span style="color: #0FB551;">+{{ getPercentTugas(item.graphTugas) }}</span>
                 </div>
                 <div v-else>
                   <span style="color: #C42300;">{{ getPercentTugas(item.graphTugas) }}</span>
                 </div>
               </template>
-              <template v-slot:[`item.pahamPersen`]>
-                <div v-if="isPositive(getPercentTugas(dataGraph.value1))">
-                  <span style="color: #0FB551;">+{{ getPercentTugas(dataGraph.value1) }}</span>
+              <template v-slot:[`item.pahamPersen`]="{ item }">
+                <div v-if="isPositive(getPercentTugas(item.graphPemahaman))">
+                  <span style="color: #0FB551;">+{{ getPercentTugas(item.graphPemahaman) }}</span>
                 </div>
                 <div v-else>
-                  <span style="color: #C42300;">{{ getPercentTugas(dataGraph.value1) }}</span>
+                  <span style="color: #C42300;">{{ getPercentTugas(item.graphPemahaman) }}</span>
                 </div>
               </template>
             </v-data-table>
@@ -202,8 +202,6 @@ export default {
         gradients,
         padding: 0,
         radius: 0,
-        value1: [],
-        value2: [],
         width: 10
       }
     }
@@ -226,13 +224,20 @@ export default {
   async mounted () {
     TabelDashboard.getMahasiswa().then((result) => {
       const panjang = result.length
-      var promises = []
+      var skalaSubTugas = []
+      var skalaPemahaman = []
       for (var i = 0; i < panjang; i++) {
-        promises.push(TabelDashboard.getProgressSubtugasByNIM(result[i].nim, "2021-07-01", "2021-08-30"))
+        skalaSubTugas.push(TabelDashboard.getProgressSubtugasByNIM(result[i].nim, "2021-07-01", "2021-08-30"))
+        skalaPemahaman.push(TabelDashboard.getProgressPahamByNIM(result[i].nim, "2021-07-01", "2021-08-30"))
       }
-      Promise.all(promises).then((res) => {
+      Promise.all(skalaPemahaman).then((res) => {
         res.forEach((value, index) => {
           result[index].graphTugas = value
+        })
+      })
+      Promise.all(skalaSubTugas).then((res) => {
+        res.forEach((value, index) => {
+          result[index].graphPemahaman = value
         })
         this.listMahasiswa = result
       })

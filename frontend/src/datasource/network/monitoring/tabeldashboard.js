@@ -19,6 +19,21 @@ const getProgressSubtugasByNIM = async (NIM, startDur, endDur) => {
   })
 }
 
+const getProgressPahamByNIM = async (NIM, startDur, endDur) => {
+  return new Promise((resolve) => {
+    try {
+      const mahasiswaURL = MAHASISWA_URL + `/getSkalaPemahamanSubtugasMahasiswaByNIM/${NIM}?start=${startDur}&end=${endDur}`
+      // const result = await baseHttp.get(mahasiswaURL)
+      // return result.data.data.progressSubtugas
+      baseHttp.get(mahasiswaURL).then((result) => {
+        resolve(result.data.data.pemahamanSubtugas)
+      })
+    } catch (e) {
+      errorHandler(e)
+    }
+  })
+}
+
 const getMahasiswa = async () => {
   return new Promise((resolve) => {
     try {
@@ -34,5 +49,6 @@ const getMahasiswa = async () => {
 
 export default {
   getProgressSubtugasByNIM,
+  getProgressPahamByNIM,
   getMahasiswa
 }
