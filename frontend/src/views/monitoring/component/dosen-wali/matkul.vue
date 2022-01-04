@@ -8,7 +8,7 @@
         plain
         text
         class="text-caption-md font-weight-bold text-none pt-2"
-        href="list-mahasiswa"
+        href="jadwal-mata-kuliah"
       >
         Lihat semua &#8594;
       </v-btn>

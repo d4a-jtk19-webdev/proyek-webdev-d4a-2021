@@ -146,10 +146,10 @@ export default {
                 dosenRes.forEach((dosen) => {
                   jadwal.nama_dosen = dosen.nama_dosen
                 })
+                this.jadwals.push(result)
               })
             })
           })
-          this.jadwals.push(result)
         })
       })
     })
