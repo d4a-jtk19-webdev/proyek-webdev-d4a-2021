@@ -18,7 +18,7 @@
         v-for="(item, index) in matkul_today"
       >
         <v-list-item
-          v-for="detailMatkul in item.Jadwals"
+          v-for="(detailMatkul, detailMatkulIndex) in item.Jadwals"
           :key="detailMatkul.id_jadwal"
           class="tile"
           :style="isMobile? 'max-height: 73px;' : 'max-height: 82px; max-width: 337px'"
@@ -33,10 +33,10 @@
           </v-divider>
           <v-col :style="isMobile? 'color: #3A3A3A' : 'color: #3A3A3A; max-width: 170px'" class="text-lg-subtitle-1">
             <v-list-item-subtitle :class="isMobile? 'text-left font-weight-black' : 'text-left font-weight-black text-wrap'" :style="isMobile? '' : 'max-height: 34px; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow:hidden; text-overflow: ellipsis; display: -webkit-box;'">
-              {{matkul_name[index]}}
+              {{matkul_name[index][0]}}
             </v-list-item-subtitle>
             <v-list-item-subtitle class="text-left" style="font-size: 13px">
-              {{ nama_dosen[index] }}
+              {{ matkul_name[index][1][detailMatkulIndex] }}
             </v-list-item-subtitle>
           </v-col>
 
@@ -54,8 +54,7 @@ export default {
   data () {
     return {
       matkul_today: [],
-      matkul_name: [],
-      nama_dosen: []
+      matkul_name: []
     }
   },
   computed: {
@@ -66,13 +65,14 @@ export default {
   async mounted () {
     var matkul = await JadwalMataKuliah.getJadwalMatakuliah()
     this.matkul_today = matkul
-    console.log(this.matkul_today)
-    this.matkul_today.forEach(async (value, index) => {
+    this.matkul_today.forEach(async (value, matkulIndex) => {
+      var dosenName = []
       var namaMatkul = await JadwalMataKuliah.getNamaMataKuliah(value.id_mata_kuliah)
-      this.matkul_name.push(namaMatkul)
-
-      var namaDosen = await JadwalMataKuliah.getNamaDosen(value.Jadwals[0].nip)
-      this.dosne_name.push(namaDosen)
+      value.Jadwals.forEach(async (matkul, index) => {
+        var namaDosen = await JadwalMataKuliah.getNamaDosen(matkul.nip)
+        dosenName.push(namaDosen)
+      })
+      this.matkul_name.push([namaMatkul, dosenName])
     })
   }
 }

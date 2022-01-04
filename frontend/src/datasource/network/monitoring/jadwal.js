@@ -3,7 +3,7 @@ import errorHandler
   from "@/datasource/network/errorHandler"
 
 const NETWORK_TIMEOUT = 10000
-const AUTH_URL = "http://localhost:14418/"
+const AUTH_URL = process.env.VUE_APP_AKUN_API_URL
 const instance = axios.create({
   baseURL: AUTH_URL,
   timeout: NETWORK_TIMEOUT
@@ -28,9 +28,9 @@ const getNamaMataKuliah = async (kodeMataKuliah) => {
 }
 const getNamaDosen = async (nip) => {
   try {
-    const monitoringUrl = `dosen/get-one/196610181995121000`
+    const monitoringUrl = `dosen/get-one/${nip}`
     const result = await instance.get(monitoringUrl)
-    return result.data.nama_dosen
+    return result.data.data.nama_dosen
   } catch (e) {
     return await errorHandler(e)
   }

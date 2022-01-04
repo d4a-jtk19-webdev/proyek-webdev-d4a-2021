@@ -1,6 +1,6 @@
 <template>
   <v-app :style="{background : currentTheme.background}">
-    <side-bar v-if="!isMobile" :items="isUserDosen ? sideBarItemsDsn : isUserMhs ? sideBarItemsMhs : sideBarItemsWlDsn"/>
+    <side-bar v-if="!isMobile" :items="isUserWlDsn ? sideBarItemsWlDsn : isUserDosen ? sideBarItemsDsn : sideBarItemsMhs"/>
     <nav-bar v-if="!isMobile"/>
     <mobile-nav-bar v-else :items="isUserWlDsn ? sideBarItemsWlDsn : isUserDosen ? sideBarItemsDsn : sideBarItemsMhs"/>
     <v-main :class="{'pl-14': isPad }">
@@ -68,6 +68,7 @@ export default {
         { text: "List Mahasiswa", icon: "mdi-account-group", to: "/monitoring/wali-dosen/list-mahasiswa" },
         { text: "Jadwal Mata Kuliah", icon: "mdi-format-list-bulleted", to: "/monitoring/wali-dosen/jadwal-mata-kuliah" }
       ],
+      isUserWlDsn: false,
       isUserDosen: false,
       isUserMhs: false
     }
@@ -151,7 +152,9 @@ export default {
     cekUserRoles () {
       var roles = this.identity.realm_access.roles
       for (var i in roles) {
-        if (roles[i] === "dosen") {
+        if (roles[i] === "dosen wali") {
+          this.isUserWlDsn = true
+        } else if (roles[i] === "dosen") {
           this.isUserDosen = true
         } else if (roles[i] === "mahasiswa") {
           this.isUserMhs = true
