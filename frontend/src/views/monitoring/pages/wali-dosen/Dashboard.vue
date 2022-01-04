@@ -34,7 +34,7 @@
       <v-col width="100%">
         <v-row>
           <!-- Table Section -->
-          <v-col :cols="isPad? '12' : '8'" :style="isPad? 'max-width: 100%;' : 'max-width: 674px;'">
+          <v-col :cols="isPad? '12' : '8'" :style="isPad? 'max-width: 100%;' : 'max-width: 765px;'">
             <v-data-table
               :headers="headers"
               :items="listMahasiswa"
@@ -104,26 +104,26 @@
                     :line-width="dataGraph.width"
                     :padding="dataGraph.padding"
                     :smooth="dataGraph.radius || false"
-                    :value="dataGraph.value1"
+                    :value="item.graphPemahaman"
                     auto-draw
                     class="stackSpark"
                   ></v-sparkline>
                 </v-col>
               </template>
               <template v-slot:[`item.tugasPersen`]="{ item }">
-                <div v-if="isPositive(getPercentTugas(dataGraph.value1))">
+                <div v-if="isPositive(getPercentTugas(item.graphTugas))">
                   <span style="color: #0FB551;">+{{ getPercentTugas(item.graphTugas) }}</span>
                 </div>
                 <div v-else>
                   <span style="color: #C42300;">{{ getPercentTugas(item.graphTugas) }}</span>
                 </div>
               </template>
-              <template v-slot:[`item.pahamPersen`]>
-                <div v-if="isPositive(getPercentTugas(dataGraph.value1))">
-                  <span style="color: #0FB551;">+{{ getPercentTugas(dataGraph.value1) }}</span>
+              <template v-slot:[`item.pahamPersen`]="{ item }">
+                <div v-if="isPositive(getPercentTugas(item.graphPemahaman))">
+                  <span style="color: #0FB551;">+{{ getPercentTugas(item.graphPemahaman) }}</span>
                 </div>
                 <div v-else>
-                  <span style="color: #C42300;">{{ getPercentTugas(dataGraph.value1) }}</span>
+                  <span style="color: #C42300;">{{ getPercentTugas(item.graphPemahaman) }}</span>
                 </div>
               </template>
             </v-data-table>
@@ -202,8 +202,6 @@ export default {
         gradients,
         padding: 0,
         radius: 0,
-        value1: [],
-        value2: [],
         width: 10
       }
     }
@@ -223,9 +221,28 @@ export default {
       return this.$store.getters.identity
     }
   },
-  created () {
-    // this.user.nama = this.identity.given_name
-    const tasks = []
+  async mounted () {
+    TabelDashboard.getMahasiswa().then((result) => {
+      const panjang = result.length
+      var skalaSubTugas = []
+      var skalaPemahaman = []
+      for (var i = 0; i < panjang; i++) {
+        skalaSubTugas.push(TabelDashboard.getProgressSubtugasByNIM(result[i].nim, "2021-07-01", "2021-08-30"))
+        skalaPemahaman.push(TabelDashboard.getProgressPahamByNIM(result[i].nim, "2021-07-01", "2021-08-30"))
+      }
+      Promise.all(skalaPemahaman).then((res) => {
+        res.forEach((value, index) => {
+          result[index].graphTugas = value
+        })
+      })
+      Promise.all(skalaSubTugas).then((res) => {
+        res.forEach((value, index) => {
+          result[index].graphPemahaman = value
+        })
+        this.listMahasiswa = result
+      })
+    })
+    var tasks = []
     if (this.$route.meta.requiresAuth) {
       tasks.push(this.waitAuthenticated())
     }
@@ -233,21 +250,6 @@ export default {
       this.isLoading = false
       this.user.nama = this.identity.given_name
       console.log("User logged: " + this.user.nama)
-    })
-  },
-  async mounted () {
-    TabelDashboard.getMahasiswa().then((result) => {
-      const panjang = result.length
-      var promises = []
-      for (var i = 0; i < panjang; i++) {
-        promises.push(TabelDashboard.getProgressSubtugasByNIM(result.nim, "2021-07-01", "2021-08-30"))
-      }
-      Promise.all(promises).then((res) => {
-        res.forEach((value, index) => {
-          result[index].graphTugas = value
-        })
-        this.listMahasiswa = result
-      })
     })
   },
   methods: {
@@ -282,7 +284,7 @@ export default {
     },
     async waitAuthenticated () {
       return new Promise((resolve) => {
-        const unwatch = this.$store.watch(state => {
+        this.$store.watch(state => {
           return this.$store.getters.identity
         }, value => {
           if (!value) {
@@ -291,7 +293,7 @@ export default {
           // if (!value.isActive) {
           //   this.$router.replace({ path: "/reset-password" })
           // }
-          unwatch()
+          // unwatch()
           resolve()
         }, {
           immediate: true
