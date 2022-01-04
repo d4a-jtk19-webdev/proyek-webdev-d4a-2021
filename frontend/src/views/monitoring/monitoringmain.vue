@@ -2,7 +2,7 @@
   <v-app :style="{background : currentTheme.background}">
     <side-bar v-if="!isMobile" :items="isUserDosen ? sideBarItemsDsn : isUserMhs ? sideBarItemsMhs : sideBarItemsWlDsn"/>
     <nav-bar v-if="!isMobile"/>
-    <mobile-nav-bar v-else :items="isUserDosen ? sideBarItemsDsn : isUserMhs ? sideBarItemsMhs : sideBarItemsWlDsn"/>
+    <mobile-nav-bar v-else :items="isUserWlDsn ? sideBarItemsWlDsn : isUserDosen ? sideBarItemsDsn : sideBarItemsMhs"/>
     <v-main :class="{'pl-14': isPad }">
       <v-container :class="isMobile? 'pa-5' : isPad? 'pa-10' : 'px-8 py-5'">
         <router-view/>
