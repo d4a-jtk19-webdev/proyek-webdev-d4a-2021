@@ -14,8 +14,9 @@
         v-for="(hari, index) in jadwals"
         :key="index"
       >
+      <div id="virtual-scroll-table">
         <v-sheet  v-for="(matkul, index) in hari" :key="index">
-          <v-card class="pa-4 flex-no-wrap"  v-for="(item, index) in matkul.Jadwals" :key="index">
+          <v-card class="pa-4 mb-6 flex-no-wrap"  v-for="(item, index) in matkul.Jadwals" :key="index">
             <v-sheet rounded="lg" class="pa-4 col-12" :class="item.jenis === 'PR' ? 'orange lighten-4': 'green lighten-4'">
               <div class="rounded-lg text-h4 text-center white font-weight-bold mx-16">
                 {{item.ja}} - {{item.jb}}
@@ -60,6 +61,7 @@
             </v-sheet>
           </v-card>
         </v-sheet>
+      </div>
       </v-tab-item>
     </v-tabs-items>
   </div>
@@ -97,10 +99,10 @@ export default {
                 dosenRes.forEach((dosen) => {
                   jadwal.nama_dosen = dosen.nama_dosen
                 })
+                this.jadwals.push(result)
               })
             })
           })
-          this.jadwals.push(result)
         })
       })
     })
@@ -119,4 +121,5 @@ export default {
   .v-slide-group{display: inline-block;}
   .tab {filter: drop-shadow(0px 4px 0px rgba(0, 0, 0, 0.25));background-color:#FFFFFF;}
   .tab:focus{color: #727272; background-color:#F7F7F7; filter: none;}
+  #virtual-scroll-table{max-height: 500px;overflow: auto;}
 </style>
