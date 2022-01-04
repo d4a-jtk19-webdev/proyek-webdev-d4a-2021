@@ -203,3 +203,19 @@ export const getSemuaTugasByNIM = async (nim, startDuration, endDuration) => {
     console.error(error)
   }
 }
+
+export const getSkalaPemahamanByNIM = async (nim, startDuration, endDuration) => {
+  try {
+    const skalaPemahaman = await sequelize.query(
+      ' SELECT mhs.nim, AVG(Cast(sub_tgs.skala_pemahaman as int)) "skala" FROM "Mahasiswa" mhs LEFT JOIN "Studi" std ON (mhs.nim = std.id_mahasiswa) LEFT JOIN "Subtugas" sub_tgs ON (sub_tgs.id_studi = std.id) WHERE mhs.nim = ? AND sub_tgs.status_subtugas = \'t\' AND sub_tgs.tenggat > ? AND sub_tgs.tenggat  < ? GROUP BY mhs.nim',
+      {
+        replacements: [nim, startDuration, endDuration],
+        type: sequelize.QueryTypes.SELECT
+      }
+    );
+
+    return skalaPemahaman
+  } catch (error) {
+    console.error(error)
+  }
+}
