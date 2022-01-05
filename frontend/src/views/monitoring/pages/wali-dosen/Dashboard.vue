@@ -115,7 +115,7 @@
                   <span style="color: #0FB551;">+{{ getPercentTugas(item.graphTugas) }}</span>
                 </div>
                 <div v-else>
-                  <span style="color: #C42300;">{{ getPercentTugas(item.graphTugas) }}</span>
+                  <span style="color: #C42300;">-{{ getPercentTugas(item.graphTugas) }}</span>
                 </div>
               </template>
               <template v-slot:[`item.pahamPersen`]="{ item }">
@@ -123,7 +123,7 @@
                   <span style="color: #0FB551;">+{{ getPercentTugas(item.graphPemahaman) }}</span>
                 </div>
                 <div v-else>
-                  <span style="color: #C42300;">{{ getPercentTugas(item.graphPemahaman) }}</span>
+                  <span style="color: #C42300;">-{{ getPercentTugas(item.graphPemahaman) }}</span>
                 </div>
               </template>
             </v-data-table>
@@ -230,12 +230,12 @@ export default {
         skalaSubTugas.push(TabelDashboard.getProgressSubtugasByNIM(result[i].nim, "2021-07-01", "2021-08-30"))
         skalaPemahaman.push(TabelDashboard.getProgressPahamByNIM(result[i].nim, "2021-07-01", "2021-08-30"))
       }
-      Promise.all(skalaPemahaman).then((res) => {
+      Promise.all(skalaSubTugas).then((res) => {
         res.forEach((value, index) => {
           result[index].graphTugas = value
         })
       })
-      Promise.all(skalaSubTugas).then((res) => {
+      Promise.all(skalaPemahaman).then((res) => {
         res.forEach((value, index) => {
           result[index].graphPemahaman = value
         })
